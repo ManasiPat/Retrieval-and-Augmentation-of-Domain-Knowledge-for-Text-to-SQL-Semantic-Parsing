@@ -1,0 +1,1103 @@
+{
+    "0": {
+        "question": "What's Angela Sanders's major?",
+        "GT_SQL": "SELECT T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.first_name = 'Angela' AND T1.last_name = 'Sanders'",
+        "actual_evidence": [
+            "major refers to major_name"
+        ],
+        "generic_evidence_automated": [
+            "\"Angela Sanders's major\" refers to T2.major_name."
+        ],
+        "generic_evidence": [
+            "'Angela Sanders's major' refers to major.major_name."
+        ]
+    },
+    "1": {
+        "question": "Please list the full names of the students in the Student_Club that come from the Art and Design Department.",
+        "GT_SQL": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T2.department = 'Art AND Design Department'",
+        "actual_evidence": [
+            "full name refers to first_name, last_name"
+        ],
+        "generic_evidence_automated": [
+            "'full names in the Student_Club that come from the Art and Design Department' refers to member.first_name, member.last_name"
+        ],
+        "generic_evidence": [
+            "'list the full names' refers to member.first_name AND member.last_name",
+            "'from the Art and Design Department' rfers to major.department = 'Art AND Design Department'"
+        ]
+    },
+    "2": {
+        "question": "How many students of the Student_Club have attended the event \"Women's Soccer\"?",
+        "GT_SQL": "SELECT COUNT(T1.event_id) FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event WHERE T1.event_name = 'Women''s Soccer'",
+        "actual_evidence": [
+            "Women's Soccer is an event name"
+        ],
+        "generic_evidence_automated": [
+            "'attended the event \"Women''s Soccer\"' refers to COUNT(attendance.event_id) WHERE event.event_name = 'Women''s Soccer'"
+        ],
+        "generic_evidence": [
+            "'the event Women's Soccer' refers to event.event_name = 'Women's Soccer'"
+        ]
+    },
+    "3": {
+        "question": "What is the event that has the highest attendance of the students from the Student_Club?",
+        "GT_SQL": "SELECT T1.event_name FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event GROUP BY T1.event_name ORDER BY COUNT(T2.link_to_event) DESC LIMIT 1",
+        "actual_evidence": [
+            "event with highest attendance refers to MAX(COUNT(link_to_event))"
+        ],
+        "generic_evidence_automated": [
+            "'event that has the highest attendance of the students from the Student_Club' refers to T1.event_name ORDER BY COUNT(T2.link_to_event) DESC LIMIT 1"
+        ],
+        "generic_evidence": [
+            "'highest attendance of the students from the Student_Club' refers to ORDER BY COUNT(attendance.link_to_event) DESC LIMIT 1"
+        ]
+    },
+    "4": {
+        "question": "Which college is the vice president of the Student_Club from?",
+        "GT_SQL": "SELECT T2.college FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.position LIKE 'vice president'",
+        "actual_evidence": [
+            "Vice President is a position of the Student Club"
+        ],
+        "generic_evidence_automated": [
+            "'Vice President of the Student Club' refers to T1.position LIKE 'vice president'"
+        ],
+        "generic_evidence": [
+            "'Vice President of the Student Club' refers to member.position LIKE 'vice president'"
+        ]
+    },
+    "5": {
+        "question": "Please list the event names of all the events attended by Angela Sanders.",
+        "GT_SQL": "SELECT T1.event_name FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event INNER JOIN member AS T3 ON T2.link_to_member = T3.member_id WHERE T3.first_name = 'Angela' AND T3.last_name = 'Sanders'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "6": {
+        "question": "How many events of the Student_Club did Sacha Harrison attend in 2019?",
+        "GT_SQL": "SELECT COUNT(T1.event_id) FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event INNER JOIN member AS T3 ON T2.link_to_member = T3.member_id WHERE T3.first_name = 'Sacha' AND T3.last_name = 'Harrison' AND SUBSTR(T1.event_date, 1, 4) = '2019'",
+        "actual_evidence": [
+            "events attended in 2019 refers to YEAR(event_date) = 2019"
+        ],
+        "generic_evidence_automated": [
+            "'events attended in {100}' refers to SUBSTR(event.event_date, 1, 4) = '100'"
+        ],
+        "generic_evidence": [
+            "'events attended in the year {1000}' refers to SUBSTR(event.event_date, 1, 4) = '1000'",
+            "'name Sacha Harrison' refers to member.first_name = 'Sacha' AND member.last_name = 'Harrison'"
+        ]
+    },
+    "7": {
+        "question": "How many members of the Student_Club have majored Environmental Engineering?\n",
+        "GT_SQL": "SELECT COUNT(T1.member_id) FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T2.major_name = 'Environmental Engineering'",
+        "actual_evidence": [
+            "'Environmental Engineering' is the major name"
+        ],
+        "generic_evidence_automated": [
+            "'members of the Student_Club have majored Environmental Engineering' refers to COUNT(member.member_id) WHERE major.major_name = 'Environmental Engineering'"
+        ],
+        "generic_evidence": [
+            "'majored Environmental Engineering' refers to major.major_name = 'Environmental Engineering'",
+            "'members of the Student_Club' refers to member.member_id"
+        ]
+    },
+    "8": {
+        "question": "What college offers the major that Tyler Hewitt took?",
+        "GT_SQL": "SELECT T2.college FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.first_name = 'Tyler' AND T1.last_name = 'Hewitt'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "9": {
+        "question": "What is the amount of the funds that the Vice President received?",
+        "GT_SQL": "SELECT T2.amount FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member WHERE T1.position = 'Vice President'",
+        "actual_evidence": [
+            "'Vice President' is a position of Student Club",
+            " funds received refers to amount"
+        ],
+        "generic_evidence_automated": [
+            "The amount of funds that the Vice President received refers to income.amount from member INNER JOIN income ON member.member_id = income.link_to_member WHERE member.position = 'Vice President'.",
+            "'funds received' refers to income.amount"
+        ],
+        "generic_evidence": [
+            "the Vice President refers to member.position = 'Vice President'.",
+            "'amount of the funds received' refers to income.amount"
+        ]
+    },
+    "10": {
+        "question": "List the full name of the Student_Club members that grew up in Illinois state.",
+        "GT_SQL": "SELECT T1.first_name, T1.last_name member member A T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T2.state = 'Illinois'",
+        "actual_evidence": [
+            "full name of member refers to first_name, last_name"
+        ],
+        "generic_evidence_automated": [
+            "'full name of the Student_Club members that grew up in Illinois state' refers to T1.first_name, T1.last_name"
+        ],
+        "generic_evidence": [
+            "'full name of the Student_Club members' refers to member.first_name AND member.last_name",
+            "'grew up in Illinois state' refers to zip_code.state = 'Illinois'"
+        ]
+    },
+    "11": {
+        "question": "Was each expense in October Meeting on October 8, 2019 approved?",
+        "GT_SQL": "SELECT T3.approved FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T1.event_name = 'October Meeting' AND T1.event_date LIKE '2019-10-08%'",
+        "actual_evidence": [
+            "event_name = 'October Meeting' where event_date = '2019-10-08'",
+            " approved = True means expenses was approved",
+            " approved = False means expenses was not approved"
+        ],
+        "generic_evidence_automated": [
+            "'October Meeting on October 8, 2019 approved' refers to T3.approved",
+            "'approved' refers to T3.approved",
+            "'approved' refers to T3.approved = False"
+        ],
+        "generic_evidence": [
+            "'in October Meeting' refers to event.event_name = 'October Meeting'",
+            "'Meeting on October {100}, {1000}' refers to event.event_date LIKE '1000-100-08%'"
+        ]
+    },
+    "12": {
+        "question": "Calculate the difference of the total amount spent in all events by the Student_Club in year 2019 and 2020.",
+        "GT_SQL": "SELECT SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2019' THEN T2.spent ELSE 0 END) - SUM(CASE WHEN SUBSTR(T1.event_date, 1, 4) = '2020' THEN T2.spent ELSE 0 END) AS num FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event",
+        "actual_evidence": [
+            "SUBTRACT(spent where YEAR(expense_date) = 2020, spent where YEAR(expense_date) = 2019)"
+        ],
+        "generic_evidence_automated": [
+            "The total amount spent in all events by the Student_Club in year {100} and {100} refers to SUM(CASE WHEN SUBSTR(event.event_date, 1, 4) = '{100}' THEN budget.spent ELSE 0 END) - SUM(CASE WHEN SUBSTR(event.event_date, 1, 4) = '{100}' THEN budget.spent ELSE 0 END)"
+        ],
+        "generic_evidence": [
+            "'The total amount spent in all events by the Student_Club in year {1000}' refers to SUM(CASE WHEN SUBSTR(event.event_date, 1, 4) = '2019' THEN budget.spent ELSE 0 END)"
+        ]
+    },
+    "13": {
+        "question": "Give the location for \"Spring Budget Review\".",
+        "GT_SQL": "SELECT location FROM event WHERE event_name = 'Spring Budget Review'",
+        "actual_evidence": [
+            "'Spring Budget Review' is an event name"
+        ],
+        "generic_evidence_automated": [
+            "\"Spring Budget Review\" refers to event_name = 'Spring Budget Review'"
+        ],
+        "generic_evidence": [
+            "Spring Budget Review refers to event.event_name = 'Spring Budget Review'"
+        ]
+    },
+    "14": {
+        "question": "With the biggest budget for the \"Food\", what was the remaining of it?",
+        "GT_SQL": "SELECT remaining FROM budget WHERE category = 'Food' AND amount = ( SELECT MAX(amount) FROM budget WHERE category = 'Food' )",
+        "actual_evidence": [
+            "remaining of budget refers to remaining, biggest budget for 'Food' refers to MAX(budget.amount) where category = 'Food'"
+        ],
+        "generic_evidence_automated": [
+            "biggest budget for the \"Food\" refers to MAX(budget.amount) where category = 'Food', remaining of budget refers to remaining."
+        ],
+        "generic_evidence": [
+            "'for the Food' refers to budget.category = 'Food'",
+            "'what was the remaining of it' refers to budget.remaining",
+            "'biggest budget' refers to MAX(budget.amount)"
+        ]
+    },
+    "15": {
+        "question": "How many majors are there in \"College of Humanities and Social Sciences\"?",
+        "GT_SQL": "SELECT COUNT(major_name) FROM major WHERE college = 'College of Humanities AND Social Sciences'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "16": {
+        "question": "Tell the phone number of \"Carlo Jacobs\".",
+        "GT_SQL": "SELECT phone FROM member WHERE first_name = 'Carlo' AND last_name = 'Jacobs'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "17": {
+        "question": "What is the status of the event which bought \"Post Cards, Posters\" on 2019/8/20?",
+        "GT_SQL": "SELECT T1.event_status FROM budget AS T1 INNER JOIN expense AS T2 ON T1.budget_id = T2.link_to_budget WHERE T2.expense_description = 'Post Cards, Posters' AND T2.expense_date = '2019-08-20'",
+        "actual_evidence": [
+            "'Post Cards, Posters' is an expense description",
+            " on 2019/8/20 refers to expense_date = '2019-8-20'",
+            " status of event refers to event_status"
+        ],
+        "generic_evidence_automated": [
+            "The event status of the expense description \"Post Cards, Posters\" on 2019/8/20 refers to T1.event_status WHERE T2.expense_description = 'Post Cards, Posters' AND T2.expense_date = '2019-08-20'",
+            "The event status of the purchase of \"Post Cards, Posters\" on 2019/8/20 refers to T1.event_status WHERE T2.expense_description = 'Post Cards, Posters' AND T2.expense_date = '2019-08-20'",
+            "'status of the event' refers to budget.event_status"
+        ],
+        "generic_evidence": [
+            "'bought Post Cards, Posters' refers to expense.expense_description = 'Post Cards, Posters'",
+            "'the status of the event' refers to budget.event_status",
+            "'on {1000}/{100}/{100}' refers to expense.expense_date = '1000-100-100'"
+        ]
+    },
+    "18": {
+        "question": "What was Brent Thomason's major?",
+        "GT_SQL": "SELECT T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.first_name = 'Brent' AND T1.last_name = 'Thomason'",
+        "actual_evidence": [
+            "major refers to major_name"
+        ],
+        "generic_evidence_automated": [
+            "'Brent Thomason\\'s major' refers to major.major_name"
+        ],
+        "generic_evidence": [
+            "'major' refers to major.major_name"
+        ]
+    },
+    "19": {
+        "question": "What's Christof Nielson's zip code type?",
+        "GT_SQL": "SELECT T2.type FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T1.first_name = 'Christof' AND T1.last_name = 'Nielson'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "20": {
+        "question": "State the major name for the Vice President of the club.",
+        "GT_SQL": "SELECT T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.position = 'Vice President'",
+        "actual_evidence": [
+            "'Vice President' is a position of Student Club"
+        ],
+        "generic_evidence_automated": [
+            "The position of the Vice President of the club refers to the major_name from the major table where the position is 'Vice President'."
+        ],
+        "generic_evidence": [
+            "'for the Vice President' refers to member.position = 'Vice President'"
+        ]
+    },
+    "21": {
+        "question": "Where is the hometown state for \"Sacha Harrison\"?",
+        "GT_SQL": "SELECT T2.state FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T1.first_name = 'Sacha' AND T1.last_name = 'Harrison'",
+        "actual_evidence": [
+            "hometown state refers to state"
+        ],
+        "generic_evidence_automated": [
+            "\"hometown state for {100}\" refers to zip_code.state"
+        ],
+        "generic_evidence": [
+            "'Where is the hometown state' refers to zip_code.state"
+        ]
+    },
+    "22": {
+        "question": "Who was the first one paid his/her dues? Tell the full name.",
+        "GT_SQL": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member WHERE T2.source = 'Dues' ORDER BY T2.date_received LIMIT 1",
+        "actual_evidence": [
+            "full name refers to first_name, last_name",
+            " first paid dues refers to MIN(received_date) where source = 'Dues'"
+        ],
+        "generic_evidence_automated": [
+            "'first one paid his/her dues' refers to ORDER BY income.date_received LIMIT 1",
+            "'first one paid his/her dues' refers to ORDER BY income.date_received LIMIT 1"
+        ],
+        "generic_evidence": [
+            "'his/her dues' refers to income.source = 'Dues'",
+            "'first paid' refers to ORDER BY income.date_received LIMIT 1"
+        ]
+    },
+    "23": {
+        "question": "How many times was the budget in Advertisement for \"Yearly Kickoff\" meeting more than \"October Meeting\"?",
+        "GT_SQL": "SELECT CAST(SUM(CASE WHEN T2.event_name = 'Yearly Kickoff' THEN T1.amount ELSE 0 END) AS REAL) / SUM(CASE WHEN T2.event_name = 'October Meeting' THEN T1.amount ELSE 0 END) FROM budget AS T1 INNER JOIN event AS T2 ON T1.link_to_event = T2.event_id WHERE T1.category = 'Advertisement' AND T2.type = 'Meeting'",
+        "actual_evidence": [
+            "DIVIDE(SUM(amount where category = 'Advertisement' and event_name = 'Yearly Kickoff'), SUM(amount event_name = 'October Meeting' and category = 'Advertisement'))"
+        ],
+        "generic_evidence_automated": [
+            "'budget in Advertisement for \"Yearly Kickoff\" meeting more than \"October Meeting\"' refers to SUM(CASE WHEN event.event_name = 'Yearly Kickoff' THEN budget.amount ELSE 0 END) / SUM(CASE WHEN event.event_name = 'October Meeting' THEN budget.amount ELSE 0 END)"
+        ],
+        "generic_evidence": [
+            "'Advertisement' refers to budget.category = 'Advertisement'",
+            "'meeting' refers to event.type = 'Meeting'",
+            "'budget in Advertisement for Yearly Kickoff' refers to SUM(CASE WHEN event.event_name = 'Yearly Kickoff' THEN budget.amount ELSE 0 END) AS REAL",
+            "'budget in Advertisement for October Meeting' refers to SUM(CASE WHEN event.event_name = 'Yearly Kickoff' THEN budget.amount ELSE 0 END) AS REAL"
+        ]
+    },
+    "24": {
+        "question": "What is the total cost of the pizzas for all the events?",
+        "GT_SQL": "SELECT SUM(cost) FROM expense WHERE expense_description = 'Pizza'",
+        "actual_evidence": [
+            "total cost of the pizzas refers to SUM(cost) where expense_description = 'Pizza'"
+        ],
+        "generic_evidence_automated": [
+            "'total cost of the pizzas' refers to SUM(expense.cost) WHERE expense.expense_description = 'Pizza'"
+        ],
+        "generic_evidence": [
+            "'total cost' refers to SUM(expense.cost)",
+            "'expense on pizzas' refers to expense.expense_description = 'Pizza'"
+
+        ]
+    },
+    "25": {
+        "question": "List all of the College of Humanities and Social Sciences' departments.",
+        "GT_SQL": "SELECT department FROM major WHERE college = 'College of Humanities AND Social Sciences'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "26": {
+        "question": "Where is Amy Firth's hometown?",
+        "GT_SQL": "SELECT T2.city, T2.county, T2.state FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T1.first_name = 'Amy' AND T1.last_name = 'Firth'",
+        "actual_evidence": [
+            "hometown refers to city, county, state"
+        ],
+        "generic_evidence_automated": [
+            "'Amy Firth's hometown' refers to zip_code.city, zip_code.county, zip_code.state"
+        ],
+        "generic_evidence": [
+            "'hometown' refers to zip_code.city AND zip_code.county AND zip_code.state"
+        ]
+    },
+    "27": {
+        "question": "What are the expenses of the budget with the lowest remaining?",
+        "GT_SQL": "SELECT T2.expense_description FROM budget AS T1 INNER JOIN expense AS T2 ON T1.budget_id = T2.link_to_budget ORDER BY T1.remaining LIMIT 1",
+        "actual_evidence": [
+            "expense of budget refers to expense_description",
+            " lowest remaining refers to MIN(remaining)"
+        ],
+        "generic_evidence_automated": [
+            "'expenses of the budget with the lowest remaining' refers to expense.expense_description",
+            "'lowest remaining' refers to ORDER BY budget.remaining LIMIT 1"
+        ],
+        "generic_evidence": [
+            "'expenses of the budget' refers to expense.expense_description",
+            "'lowest remaining' refers to ORDER BY budget.remaining LIMIT 1"
+        ]
+    },
+    "28": {
+        "question": "List all all the members who attended the event \"October Meeting\".",
+        "GT_SQL": "SELECT DISTINCT T3.member_id FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event INNER JOIN member AS T3 ON T2.link_to_member = T3.member_id WHERE T1.event_name = 'October Meeting'",
+        "actual_evidence": [
+            "'October Meeting' is an event name"
+        ],
+        "generic_evidence_automated": [
+            "'October Meeting' refers to T1.event_name = 'October Meeting'"
+        ],
+        "generic_evidence": [
+            "'all the members' refers to member.member_id",
+            "'the event October Meeting' refers to event.event_name = 'October Meeting'"
+        ]
+    },
+    "29": {
+        "question": "Which event has the highest budget amount?",
+        "GT_SQL": "SELECT T2.event_name FROM budget AS T1 INNER JOIN event AS T2 ON T1.link_to_event = T2.event_id ORDER BY T1.amount DESC LIMIT 1",
+        "actual_evidence": [
+            "event refers to event_name",
+            " highest budget amount refers to MAX(amount)"
+        ],
+        "generic_evidence_automated": [
+            "'event has the highest budget amount' refers to T2.event_name",
+            "'event has the highest budget amount' refers to ORDER BY budget.amount DESC LIMIT 1"
+        ],
+        "generic_evidence": [
+            "'Which event' refers to event.event_name",
+            "'highest budget amount' refers to ORDER BY budget.amount DESC LIMIT 1"
+        ]
+    },
+    "30": {
+        "question": "List all the expenses incurred by the vice president.",
+        "GT_SQL": "SELECT T2.expense_id, T2.expense_description FROM member AS T1 INNER JOIN expense AS T2 ON T1.member_id = T2.link_to_member WHERE T1.position = 'Vice President'",
+        "actual_evidence": [
+            "expense refers to expense_description",
+            " 'Vice President' is a position of the Student Club"
+        ],
+        "generic_evidence_automated": [
+            "'all the expenses incurred by the vice president' refers to expense.expense_description",
+            "'all the expenses incurred by the vice president' refers to expense.expense_id, expense.expense_description"
+        ],
+        "generic_evidence": [
+            "'all the expenses incurred' refers to expense.expense_id AND expense.expense_description",
+            "'by the vice president' refers to member.position = 'Vice President'"
+        ]
+    },
+    "31": {
+        "question": "When did the member, Casey Mason, received the income?",
+        "GT_SQL": "SELECT T2.date_received FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member WHERE T1.first_name = 'Casey' AND T1.last_name = 'Mason'",
+        "actual_evidence": [
+            "when the income was received refers to date_received"
+        ],
+        "generic_evidence_automated": [
+            "the member, Casey Mason, received the income refers to T2.date_received"
+        ],
+        "generic_evidence": [
+            "'when did the member received the income' refers to income.date_received"
+        ]
+    },
+    "32": {
+        "question": "How many of the members' hometowns are from Maryland state?",
+        "GT_SQL": "SELECT COUNT(T2.member_id) FROM zip_code AS T1 INNER JOIN member AS T2 ON T1.zip_code = T2.zip WHERE T1.state = 'Maryland'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "33": {
+        "question": "How many events did the member with the phone number \"954-555-6240\" attend?",
+        "GT_SQL": "SELECT COUNT(T2.link_to_event) FROM member AS T1 INNER JOIN attendance AS T2 ON T1.member_id = T2.link_to_member WHERE T1.phone = '954-555-6240'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "34": {
+        "question": "What is the highest amount of budget spend for an event?",
+        "GT_SQL": "SELECT MAX(spent) FROM budget",
+        "actual_evidence": [
+            "highest amount of budget spend refers to MAX(spent)"
+        ],
+        "generic_evidence_automated": [
+            "'highest amount of budget spend' refers to MAX(budget.spent)"
+        ],
+        "generic_evidence": [
+            "'budget spend' refers to budget.spent"
+        ]
+    },
+    "35": {
+        "question": "How many meeting events were held in 2020?",
+        "GT_SQL": "SELECT COUNT(event_id) FROM event WHERE type = 'Meeting' AND SUBSTR(event_date, 1, 4) = '2020'",
+        "actual_evidence": [
+            "meeting events refers to type = 'Meeting'",
+            " held in 2020 refers to YEAR(event_date) = 2020"
+        ],
+        "generic_evidence_automated": [
+            "'How many meeting events were held in {100}' refers to COUNT(event_id) WHERE type = 'Meeting' AND SUBSTR(event_date, 1, 4) = '100'",
+            "'How many meeting events were held in {100}' refers to COUNT(event.event_id) WHERE event.type = 'Meeting' AND SUBSTRING(event.event_date, 1, 4) = '100'"
+        ],
+        "generic_evidence": [
+            "'meeting events' refers to event.type = 'Meeting'",
+            "'events were held in {1000}' refers to SUBSTRING(event.event_date, 1, 4) = '1000'"
+        ]
+    },
+    "36": {
+        "question": "What is the total amount of money spent for food?",
+        "GT_SQL": "SELECT SUM(spent) FROM budget WHERE category = 'Food'",
+        "actual_evidence": [
+            "total amount of money spent refers to SUM(spent)",
+            " spent for food refers to category = 'Food'"
+        ],
+        "generic_evidence_automated": [
+            "'total amount of money spent for food' refers to SUM(budget.spent)",
+            "'total amount of money spent for food' refers to SUM(budget.spent) WHERE budget.category = 'Food'"
+        ],
+        "generic_evidence": [
+            "'money spent' refers to budget.spent",
+            "'spent for food' refers to budget.category = 'Food'"
+        ]
+    },
+    "37": {
+        "question": "Which student has been entrusted to manage the budget for the Football game?",
+        "GT_SQL": "SELECT T4.first_name FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget INNER JOIN member AS T4 ON T3.link_to_member = T4.member_id WHERE T1.event_name = 'Football game'",
+        "actual_evidence": [
+            "'Football game' is an event name"
+        ],
+        "generic_evidence_automated": [
+            "'entrusted to manage the budget for the Football game' refers to event.first_name"
+        ],
+        "generic_evidence": [
+            "'for the Football game' refers to event.event_name = 'Football game'"
+        ]
+    },
+    "38": {
+        "question": "Which event has the lowest cost?",
+        "GT_SQL": "SELECT T1.event_name FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget ORDER BY T3.cost LIMIT 1",
+        "actual_evidence": [
+            "event refers to event_name where MIN(cost)"
+        ],
+        "generic_evidence_automated": [
+            "'lowest cost' refers to ORDER BY expense.cost LIMIT 1"
+        ],
+        "generic_evidence": [
+            "'lowest cost' refers to ORDER BY expense.cost LIMIT 1"
+        ]
+    },
+    "39": {
+        "question": "Based on the total cost for all event, what is the percentage of cost for Yearly Kickoff event?",
+        "GT_SQL": "SELECT CAST(SUM(CASE WHEN T1.event_name = 'Yearly Kickoff' THEN T3.cost ELSE 0 END) AS REAL) * 100 / SUM(T3.cost) FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget",
+        "actual_evidence": [
+            "DIVIDE(SUM(cost where event_name = 'Yearly Kickoff'), SUM(cost)) * 100"
+        ],
+        "generic_evidence_automated": [
+            "'percentage of cost for Yearly Kickoff event' refers to CAST(SUM(CASE WHEN event.event_name = 'Yearly Kickoff' THEN expense.cost ELSE 0 END) AS REAL) * 100 / SUM(expense.cost)"
+        ],
+        "generic_evidence": [
+            "'cost for Yearly Kickoff event' refers to CAST(SUM(CASE WHEN event.event_name = 'Yearly Kickoff' THEN expense.cost ELSE 0 END) AS REAL) / SUM(expense.cost)"
+        ]
+    },
+    "40": {
+        "question": "What is the ratio between students majored in finance and physics?",
+        "GT_SQL": "SELECT SUM(CASE WHEN major_name = 'Finance' THEN 1 ELSE 0 END) / SUM(CASE WHEN major_name = 'Physics' THEN 1 ELSE 0 END) AS ratio FROM major",
+        "actual_evidence": [
+            "DIVDE(SUM(major_name = 'Finance'), SUM(major_name = 'Physics'))"
+        ],
+        "generic_evidence_automated": [
+            "'ratio between students majored in finance and physics' refers to SUM(CASE WHEN major.major_name = 'Finance' THEN 1 ELSE 0 END) / SUM(CASE WHEN major.major_name = 'Physics' THEN 1 ELSE 0 END)"
+        ],
+        "generic_evidence": [
+            "'students majored in finance and physics' refers to SUM(CASE WHEN major.major_name = 'Finance' THEN 1 ELSE 0 END)"
+        ]
+    },
+    "41": {
+        "question": "How many members of the Student_Club have major in 'Physics Teaching'?",
+        "GT_SQL": "SELECT COUNT(T2.member_id) FROM major AS T1 INNER JOIN member AS T2 ON T1.major_id = T2.link_to_major WHERE T1.major_name = 'Physics Teaching'",
+        "actual_evidence": [
+            "'Physics Teaching' is the major name"
+        ],
+        "generic_evidence_automated": [
+            "'members of the Student_Club have major in {100}' refers to COUNT(member.member_id) WHERE major.major_name = '{100}'"
+        ],
+        "generic_evidence": [
+            "'major in Physics Teaching' refers to major.major_name = 'Physics Teaching'"
+        ]
+    },
+    "42": {
+        "question": "Among all events hold by the Student_Club in 2019, find the percentage share of events related to 'Community Service'",
+        "GT_SQL": "SELECT CAST(SUM(CASE WHEN type = 'Community Service' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(type) FROM event WHERE SUBSTR(event_date, 1, 4) = '2019'",
+        "actual_evidence": [
+            "DIVIDE(SUM(type = 'Community Service'), COUNT(event_id)) * 100 where event_date BETWEEN' 2019-01-01' and '2019-12-31'"
+        ],
+        "generic_evidence_automated": [
+            "'events related to {100}' refers to SUM(CASE WHEN event.type = '{100}' THEN 1 ELSE 0 END) * 100 / COUNT(event.type)"
+        ],
+        "generic_evidence": [
+            "'events related to Community Service' refers to CAST(SUM(CASE WHEN event.type = 'Community Service' THEN 1 ELSE 0 END) AS REAL)"
+        ]
+    },
+    "43": {
+        "question": "What is the most popular size of t-shirt ordered by the club members?",
+        "GT_SQL": "SELECT t_shirt_size FROM member GROUP BY t_shirt_size ORDER BY COUNT(t_shirt_size) DESC LIMIT 1",
+        "actual_evidence": [
+            "most popular size of t-shirt ordered refers to MAX(COUNT(t_shirt_size))"
+        ],
+        "generic_evidence_automated": [
+            "'most popular size of t-shirt ordered' refers to COUNT(member.t_shirt_size)"
+        ],
+        "generic_evidence": [
+            "'most popular size of t-shirt ordered' refers to ORDER BY COUNT(member.t_shirt_size) DESC LIMIT 1" 
+        ]
+    },
+    "44": {
+        "question": "Indicate the name of the closed event whose cost has exceeded the budget the most.",
+        "GT_SQL": "SELECT T2.event_name FROM budget AS T1 INNER JOIN event AS T2 ON T2.event_id = T1.link_to_event WHERE T1.event_status = 'Closed' AND T1.remaining < 0 ORDER BY T1.remaining LIMIT 1",
+        "actual_evidence": [
+            "closed events refers to event_name where status = 'Closed'",
+            " exceed the budget the most refers to MIN(remaining) where remaining < 0"
+        ],
+        "generic_evidence_automated": [
+            "The closed event whose cost has exceeded the budget the most refers to event_name where event_status = 'Closed' and remaining < 0.",
+            "'exceed the budget the most' refers to MIN(budget.remaining) where budget.remaining < 0"
+        ],
+        "generic_evidence": [
+            "'closed event' refers to event_status = 'Closed'",
+            "'name of the event' refers to event.event_name",
+            "'exceeded the budget' refers to budget.remaining < 0"
+        ]
+    },
+    "45": {
+        "question": "Identify the type of expenses and their total value approved for 'October Meeting' event.",
+        "GT_SQL": "SELECT T1.type, SUM(T3.cost) FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T1.event_name = 'October Meeting'",
+        "actual_evidence": [
+            "total value refers to SUM(cost)",
+            " type of expenses refers to expense_description",
+            " 'October Meeting' is an event name"
+        ],
+        "generic_evidence_automated": [
+            "Identify the type of expenses and their total value approved for 'October Meeting' event refers to T3.type, SUM(T3.cost)",
+            "'type of expenses and their total value approved for {100} event' refers to T3.expense_description, SUM(T3.cost)",
+            "Identify the type of expenses and their total value approved for 'October Meeting' event refers to T3.type, SUM(T3.cost)"
+        ],
+        "generic_evidence": [
+            "'total value refers' to SUM(expense.cost)",
+            "'type of expenses' refers to expense.expense_description",
+            "'for October Meeting event' refers to event.event_name = 'October Meeting'"
+        ]
+    },
+    "46": {
+        "question": "Calculate the amount budgeted for 'April Speaker' event. List all the budgeted categories for said event in an ascending order based on their amount.",
+        "GT_SQL": "SELECT SUM(T2.amount), T2.category FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T1.event_name = 'April Speaker' ORDER BY T2.amount",
+        "actual_evidence": [
+            "'April Speaker' is an event name",
+            " amount budgeted refers to budget",
+            " budget categories refers to category"
+        ],
+        "generic_evidence_automated": [
+            "The amount budgeted for 'April Speaker' event and the budgeted categories for said event in an ascending order based on their amount refers to SUM(budget.amount), budget.category FROM event INNER JOIN budget ON event.event_id = budget.link_to_event WHERE event.event_name = 'April Speaker' ORDER BY budget.amount",
+            "The amount budgeted for 'April Speaker' event refers to SUM(budget.amount) and the budgeted categories for said event in an ascending order based on their amount refers to budget.category ORDER BY budget.amount.",
+            "The budgeted amount for 'April Speaker' event and the corresponding categories in ascending order based on their amount = SUM(budget.amount), budget.category from event INNER JOIN budget ON event.event_id = budget.link_to_event WHERE event.event_name = 'April Speaker' ORDER BY budget.amount"
+        ],
+        "generic_evidence": [
+            "'for April Speaker event' refers to event.event_name = 'April Speaker'",
+            "'The budget amount' refers to budget.amount",
+            "'budget categories' refers to budget.category",
+            "'in an ascending order based on their amount' refers to ORDER BY budget.amount"
+        ]
+    },
+    "47": {
+        "question": "Among the budgets for Advertising, list out top three which have the most budgeted amount?",
+        "GT_SQL": "SELECT budget_id FROM budget WHERE category = 'Advertising' ORDER BY amount DESC LIMIT 3",
+        "actual_evidence": [
+            "MAX(amount) where category = 'Advertising'"
+        ],
+        "generic_evidence_automated": [
+            "Top three budgeted amounts for Advertising refers to SELECT budget.amount FROM budget WHERE budget.category = 'Advertising' ORDER BY budget.amount DESC LIMIT 3"
+        ],
+        "generic_evidence": [
+            "'top three which have the most budgeted amount' refers to ORDER BY budget.amount DESC LIMIT 3"
+        ]
+    },
+    "48": {
+        "question": "Mention the total expense used on 8/20/2019.",
+        "GT_SQL": "SELECT SUM(cost) FROM expense WHERE expense_date = '2019-08-20'",
+        "actual_evidence": [
+            "total expense refers SUM(cost) where expense_date = '2019-08-20'"
+        ],
+        "generic_evidence_automated": [
+            "'total expense' refers to SUM(expense.cost) where expense.expense_date = '2019-08-20'"
+        ],
+        "generic_evidence": [
+            "'total expense' refers to SUM(expense.cost)",
+            "'on 100/100/1000' refers to expense.expense_date = '1000-100-100'"
+        ]
+    },
+    "49": {
+        "question": "List out the position of members who joined major of Journalism.",
+        "GT_SQL": "SELECT T2.position FROM major AS T1 INNER JOIN member AS T2 ON T1.major_id = T2.link_to_major WHERE T1.major_name = 'Journalism'",
+        "actual_evidence": [
+            "'Journalism' is the major name"
+        ],
+        "generic_evidence_automated": [
+            "'Journalism' refers to T1.major_name = 'Journalism'"
+        ],
+        "generic_evidence": [
+            "'major of Journalism' refers to major.major_name = 'Journalism'"
+        ]
+    },
+    "50": {
+        "question": "Mention the category of events which were held at MU 215.",
+        "GT_SQL": "SELECT T2.category FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T1.location = 'MU 215'",
+        "actual_evidence": [
+            "held at MU 215 refers to location = 'MU 215'"
+        ],
+        "generic_evidence_automated": [
+            "'events which were held at MU 215' refers to budget.category"
+        ],
+        "generic_evidence": [
+            "'were held at MU 215' refers to event.location = 'MU 215'"
+        ]
+    },
+    "51": {
+        "question": "What is the category of event which was taken place in 2020-03-24T12:00:00?",
+        "GT_SQL": "SELECT T2.category FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T1.event_date = '2020-03-24T12:00:00'",
+        "actual_evidence": [
+            "taken place in 2020-03-24T12:00:00 refers to event_date = '2020-03-24T12:00:00'"
+        ],
+        "generic_evidence_automated": [
+            "'category of event which was taken place in {100}' refers to budget.category"
+        ],
+        "generic_evidence": [
+            "taken place in 1000-100-100T100:100:100 refers to event.event_date = '1000-100-100T100:100:100'"
+        ]
+    },
+    "52": {
+        "question": "State the category of events were held at 100 W. Main Street.",
+        "GT_SQL": "SELECT T2.category FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T1.location = '100 W. Main Street'",
+        "actual_evidence": [
+            "'100 W. Main Street' is the location of event"
+        ],
+        "generic_evidence_automated": [
+            "The location of the event at '100 W. Main Street' refers to T1.location = '100 W. Main Street'"
+        ],
+        "generic_evidence": [
+            "were held at 100 W. Main Street' refers to event.location = '100 W. Main Street'"
+        ]
+    },
+    "53": {
+        "question": "Among the members, how many of them have an extra large t-shirt size?",
+        "GT_SQL": "SELECT COUNT(member_id) FROM member WHERE position = 'Member' AND t_shirt_size = 'X-Large'",
+        "actual_evidence": [
+            "among the members refers to position = 'Member'",
+            " extra large t-shirt size refers to t_shirt_size = 'X-Large'"
+        ],
+        "generic_evidence_automated": [
+            "'Among the members' refers to COUNT(member.member_id) WHERE member.position = 'Member'",
+            "'extra large t-shirt size' refers to t_shirt_size = 'X-Large'"
+        ],
+        "generic_evidence": [
+            "'Among the members' refers to member.position = 'Member'",
+            "'extra large t-shirt size' refers to t_shirt_size = 'X-Large'"
+        ]
+    },
+    "54": {
+        "question": "In the College of Agriculture and Applied Sciences, how many majors are under the department of School of Applied Sciences, Technology and Education?",
+        "GT_SQL": "SELECT COUNT(major_id) FROM major WHERE department = 'School of Applied Sciences, Technology AND Education' AND college = 'College of Agriculture AND Applied Sciences'",
+        "actual_evidence": [],
+        "generic_evidence_automated": [],
+        "generic_evidence": []
+    },
+    "55": {
+        "question": "List the last name of members with a major in environmental engineering and include its department and college name.",
+        "GT_SQL": "SELECT T2.last_name, T1.department, T1.college FROM major AS T1 INNER JOIN member AS T2 ON T1.major_id = T2.link_to_major WHERE T2.position = 'Member' AND T1.major_name = 'Environmental Engineering'",
+        "actual_evidence": [
+            "'Environmental Engineering' is the major name"
+        ],
+        "generic_evidence_automated": [
+            "'Environmental Engineering' refers to T1.major_name = 'Environmental Engineering'"
+        ],
+        "generic_evidence": [
+            "'with a major in environmental engineering' refers to major.major_name = 'Environmental Engineering'"
+        ]
+    },
+    "56": {
+        "question": "What are the budget category of the events located at MU 215 and a guest speaker type with a 0 budget spent?",
+        "GT_SQL": "SELECT DISTINCT T2.category, T1.type FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T1.location = 'MU 215' AND T2.spent = 0 AND T1.type = 'Guest Speaker'",
+        "actual_evidence": [
+            "budget category refers to category",
+            " events located at refers to location",
+            " type = 'Guest Speaker'",
+            " 0 budget spent refers to spent = 0"
+        ],
+        "generic_evidence_automated": [
+            "The budget category of the events located at MU 215 and a guest speaker type with a 0 budget spent refers to T2.category.",
+            "The budget category of the events located at MU 215 and a guest speaker type with a 0 budget spent refers to DISTINCT budget.category, event.type FROM event INNER JOIN budget ON event.event_id = budget.link_to_event WHERE event.location = 'MU 215' AND budget.spent = 0 AND event.type = 'Guest Speaker'",
+            "'guest speaker type with a 0 budget spent' refers to T1.type = 'Guest Speaker' AND T2.spent = 0",
+            "The budget category of events located at MU 215 and a guest speaker type with a 0 budget spent refers to DISTINCT budget.category, event.type FROM event INNER JOIN budget ON event.event_id = budget.link_to_event WHERE event.location = 'MU 215' AND budget.spent = 0 AND event.type = 'Guest Speaker'"
+        ],
+        "generic_evidence": [
+            "'budget category of the events' refers to budget.category",
+            "'events located at MU 215' refers to event.location = 'MU 215'",
+            "'a guest speaker type' refers to event.type = 'Guest Speaker'",
+            "'with 0 budget spent' refers to budget.spent = 0"
+        ]
+    },
+    "57": {
+        "question": "What is the name of the social event that was attended by the vice president of the Student_Club located at 900 E. Washington St.?",
+        "GT_SQL": "SELECT T2.event_name FROM attendance AS T1 INNER JOIN event AS T2 ON T2.event_id = T1.link_to_event INNER JOIN member AS T3 ON T1.link_to_member = T3.member_id WHERE T3.position = 'Vice President' AND T2.location = '900 E. Washington St.' AND T2.type = 'Social'",
+        "actual_evidence": [
+            "name of social event refers to event_name where type = 'Social'",
+            " 'Vice President' is position",
+            " located at refers to location"
+        ],
+        "generic_evidence_automated": [
+            "'social event that was attended by the vice president of the Student_Club located at 900 E. Washington St.' refers to T2.event_name WHERE T2.type = 'Social' AND T3.position = 'Vice President' AND T2.location = '900 E. Washington St.'",
+            "The social event attended by the vice president of the Student_Club located at 900 E. Washington St. refers to T2.event_name.",
+            "'the social event that was attended by the vice president of the Student_Club located at 900 E. Washington St.' refers to T2.event_name WHERE T3.position = 'Vice President' AND T2.location = '900 E. Washington St.' AND T2.type = 'Social'"
+        ],
+        "generic_evidence": [
+            "'What is the name of the event' refers to event.event_name where type = 'Social'",
+            "'social event' refers to event.type = 'Social'",
+            "'vice president of the Student_Club' is member.position = 'Vice President'",
+            "'located at 900 E. Washington St.' refers to event.location = '900 E. Washington St.'"
+        ]
+    },
+    "58": {
+        "question": "List the last name of the members of the club that attended the women's soccer event.",
+        "GT_SQL": "SELECT T3.last_name FROM attendance AS T1 INNER JOIN event AS T2 ON T2.event_id = T1.link_to_event INNER JOIN member AS T3 ON T1.link_to_member = T3.member_id WHERE T2.event_name = 'Women''s Soccer' AND T3.position = 'Member'",
+        "actual_evidence": [
+            "members of the club refers to position = 'Member'",
+            " 'Women's Soccer' is event name"
+        ],
+        "generic_evidence_automated": [
+            "'attended the women's soccer event' refers to T2.event_name = 'Women''s Soccer' and T3.position = 'Member'",
+            "'attended the women's soccer event' refers to T3.last_name FROM attendance INNER JOIN event ON event.event_id = attendance.link_to_event INNER JOIN member ON attendance.link_to_member = member.member_id WHERE event.event_name = 'Women''s Soccer' AND member.position = 'Member'"
+        ],
+        "generic_evidence": [
+            "'members of the club' refers to member.position = 'Member'",
+            "'attended the women's soccer event' refers to event.event_name = 'Women's Soccer'"
+        ]
+    },
+    "59": {
+        "question": "Which countries have zip codes with post office boxes?",
+        "GT_SQL": "SELECT DISTINCT county FROM zip_code WHERE type = 'PO Box' AND county IS NOT NULL",
+        "actual_evidence": [
+            "zip codes that have post office boxes refers to type = 'PO Box'"
+        ],
+        "generic_evidence_automated": [
+            "'zip codes with post office boxes' refers to type = 'PO Box'"
+        ],
+        "generic_evidence": [
+            "'zip codes with post office boxes' refers to zip_code.type = 'PO Box'"
+        ]
+    },
+    "60": {
+        "question": "List the names of closed event as \"game\" that was closed from 3/15/2019 to 3/20/2020.",
+        "GT_SQL": "SELECT DISTINCT event_name FROM event WHERE type = 'Game' AND date(SUBSTR(event_date, 1, 10)) BETWEEN '2019-03-15' AND '2020-03-20' AND status = 'Closed'",
+        "actual_evidence": [
+            "name of events refers event_name",
+            " game event that was closed refers to type = 'Game' where status = 'Closed'",
+            " event_date BETWEEN '2019-03-15' and '2020-05-20'"
+        ],
+        "generic_evidence_automated": [
+            "List the names of closed event as \"game\" that was closed from 3/15/2019 to 3/20/2020 refers to SELECT DISTINCT event_name FROM event WHERE type = 'Game' AND date(SUBSTR(event_date, 1, 10)) BETWEEN '2019-03-15' AND '2020-03-20' AND status = 'Closed'",
+            "'game' that was closed from 3/15/2019 to 3/20/2020 refers to DISTINCT event_name FROM event WHERE type = 'Game' AND date(SUBSTR(event_date, 1, 10)) BETWEEN '2019-03-15' AND '2020-03-20' AND status = 'Closed'",
+            "'closed event as \"game\" that was closed from 3/15/2019 to 3/20/2020' refers to date(SUBSTR(event_date, 1, 10)) BETWEEN '2019-03-15' AND '2020-03-20'"
+        ],
+        "generic_evidence": [
+            "'name of events' refers event.event_name",
+            "'game event' refers to event.type = 'Game'",
+            "'event that was closed' refers to event.status = 'Closed'",
+            "'from {100}/{100}/{1000} to {100}/{100}/{1000}' refers to date(SUBSTR(event.event_date, 1, 10)) BETWEEN '1000-100-100' AND '1000-100-100'"
+        ]
+    },
+    "61": {
+        "question": "Please provide links to events for members who have paid more than 50 dollar.",
+        "GT_SQL": "SELECT DISTINCT T3.link_to_event FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN attendance AS T3 ON T2.member_id = T3.link_to_member WHERE T1.cost > 50",
+        "actual_evidence": [
+            "have paid more than 50 dollar refers to cost > 50"
+        ],
+        "generic_evidence_automated": [
+            "'members who have paid more than {100} dollar' refers to cost > {100}"
+        ],
+        "generic_evidence": [
+            "'paid more than {100} dollar' refers to expense.cost > 100"
+        ]
+    },
+    "62": {
+        "question": "Which members who were approved from 1/10/2019 to 11/19/2019? Please identify the member who attended the event and the link to their event.",
+        "GT_SQL": "SELECT DISTINCT T1.link_to_member, T3.link_to_event FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN attendance AS T3 ON T2.member_id = T3.link_to_member WHERE date(SUBSTR(T1.expense_date, 1, 10)) BETWEEN '2019-01-10' AND '2020-11-19' AND T1.approved = 'true'",
+        "actual_evidence": [
+            "approved from 1/10/2019 to 11/19/2019 refers to approved = 'true' and expense_date BETWEEN '2019-01-19' and '2019-11-19'"
+        ],
+        "generic_evidence_automated": [
+            "'approved from {100} to {100}' refers to approved = 'true' and expense_date BETWEEN '100-01-10' AND '100-11-19'"
+        ],
+        "generic_evidence": [
+            "'members who were approved' refers to expense.approved = 'true'",
+            "'from {100}/{100}/{1000} to {100}/{100}/{1000}' refers to expense.expense_date BETWEEN '1000-100-100' AND '1000-100-100'",
+            "'the link to their event' refers to attendance.link_to_event"
+        ]
+    },
+    "63": {
+        "question": "Please list the phone numbers of the members who majored in finance at the School of Business.",
+        "GT_SQL": "SELECT T1.phone FROM member AS T1 INNER JOIN major AS T2 ON T2.major_id = T1.link_to_major WHERE T2.major_name = 'Finance' AND T2.college = 'School of Business'",
+        "actual_evidence": [
+            "'School of Business' is the college",
+            " majored in finance refers to major_name = 'Finance'",
+            " phone numbers refers to phone"
+        ],
+        "generic_evidence_automated": [
+            "'majored in finance at the School of Business' refers to T2.major_name = 'Finance' AND T2.college = 'School of Business'",
+            "'majored in finance at the School of Business' refers to T2.major_name = 'Finance' AND T2.college = 'School of Business'",
+            "'majored in finance at the School of Business' refers to T2.major_name = 'Finance' AND T2.college = 'School of Business'"
+        ],
+        "generic_evidence": [
+            "'at the School of Business' refers to major.college = 'School of Business'",
+            "'majored in finance' refers to major.major_name = 'Finance'",
+            "'list the phone numbers of the members' refers to member.phone"
+        ]
+    },
+    "64": {
+        "question": "List emails of people who paid more than 20 dollars from 9/10/2019 to 11/19/2019.",
+        "GT_SQL": "SELECT DISTINCT T1.email FROM member AS T1 INNER JOIN expense AS T2 ON T1.member_id = T2.link_to_member WHERE date(SUBSTR(T2.expense_date, 1, 10)) BETWEEN '2019-09-10' AND '2020-11-19' AND T2.cost > 20",
+        "actual_evidence": [
+            "expense_date BETWEEN '2019-09-10' and '2019-11-19'",
+            " cost > 20"
+        ],
+        "generic_evidence_automated": [
+            "'from 9/10/2019 to 11/19/2019' refers to date(SUBSTR(expense.expense_date, 1, 10)) BETWEEN '2019-09-10' AND '2019-11-19'",
+            "'paid more than {100} dollars' refers to T2.cost > {100}"
+        ],
+        "generic_evidence": [
+            "'from {100}/{100}/{1000} to {100}/{100}/{1000}' refers to date(SUBSTR(expense.expense_date, 1, 10)) BETWEEN '1000-100-100' AND '1000-100-100'",
+            "'paid more than {100} dollars' refers to expense.cost > 100"
+        ]
+    },
+    "65": {
+        "question": "Give the event ID, location, and status of events conducted from November 2019 to March 2020.",
+        "GT_SQL": "SELECT event_id, location, status FROM event WHERE date(SUBSTR(event_date, 1, 10)) BETWEEN '2019-01-11' AND '2020-03-31'",
+        "actual_evidence": [
+            "event_date BETWEEN '2019-01-11' and '2020-03-31'"
+        ],
+        "generic_evidence_automated": [
+            "Events conducted from November 2019 to March 2020 refers to date(SUBSTR(event_date, 1, 10)) BETWEEN '2019-01-11' AND '2020-03-31'"
+        ],
+        "generic_evidence": [
+            "Events conducted from November {1000} to March {1000} refers to date(SUBSTR(event.event_date, 1, 10)) BETWEEN '1000-01-11' AND '1000-03-31'"
+        ]
+    },
+    "66": {
+        "question": "Find the full name of members whose t-shirt size is extra large.",
+        "GT_SQL": "SELECT first_name, last_name FROM member WHERE t_shirt_size = 'X-Large'",
+        "actual_evidence": [
+            "full name refers to first_name, last_name",
+            " t_shirt_size = 'X-Large'"
+        ],
+        "generic_evidence_automated": [
+            "'full name of members whose t-shirt size is extra large' refers to first_name, last_name",
+            "'t-shirt size is extra large' refers to 'member.t_shirt_size = 'X-Large''"
+        ],
+        "generic_evidence": [
+            "'full name of members' refers to member.first_name AND member.last_name",
+            "'t-shirt size is extra large' refers to 'member.t_shirt_size = 'X-Large''"
+        ]
+    },
+    "67": {
+        "question": "Calculate the percentage of zip codes that are PO boxes.",
+        "GT_SQL": "SELECT CAST(SUM(CASE WHEN type = 'PO box' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(zip_code) FROM zip_code",
+        "actual_evidence": [
+            "DIVIDE(SUM(type = 'PO Box'), COUNT(zip_code)) * 100"
+        ],
+        "generic_evidence_automated": [
+            "'percentage of zip codes that are PO boxes' refers to CAST(SUM(CASE WHEN zip_code.type = 'PO box' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(zip_code)"
+        ],
+        "generic_evidence": [
+            "'number of zip codes that are PO boxes' refers to CAST(SUM(CASE WHEN zip_code.type = 'PO box' THEN 1 ELSE 0 END) AS REAL)"
+        ]
+    },
+    "68": {
+        "question": "List the name and location of events that underspend its budget.",
+        "GT_SQL": "SELECT DISTINCT T1.event_name, T1.location FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T2.remaining > 0",
+        "actual_evidence": [
+            "name of event refers to event_name",
+            " underspend its budget refers to remaining > 0"
+        ],
+        "generic_evidence_automated": [
+            "'name and location of events that underspend its budget' refers to DISTINCT event.event_name, event.location",
+            "'events that underspend its budget' refers to T2.remaining > 0"
+        ],
+        "generic_evidence": [
+            "'name of event' refers to DISTINCT event.event_name",
+            "'location of event' refers to DISTINCT event.location",
+            "'underspend its budget' refers to budget.remaining > 0"
+        ]
+    },
+    "69": {
+        "question": "What is the name and major of members who had to spend more than a hundred dollars on an expense?",
+        "GT_SQL": "SELECT DISTINCT T1.first_name, T1.last_name, T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T2.major_id = T1.link_to_major INNER JOIN expense AS T3 ON T1.member_id = T3.link_to_member WHERE T3.cost > 100",
+        "actual_evidence": [
+            "full name refers to first_name, last_name",
+            " major of members refers to major_name",
+            " spend more than a hundred dollars on an expense refers to cost > 100"
+        ],
+        "generic_evidence_automated": [
+            "'members who had to spend more than {100} dollars on an expense' refers to T3.cost > {100}",
+            "'major of members who had to spend more than {100} dollars on an expense' refers to T2.major_name",
+            "'spend more than a hundred dollars on an expense' refers to T3.cost > 100"
+        ],
+        "generic_evidence": [
+            "'name of members' refers to member.first_name AND member.last_name",
+            "'major of members' refers to major.major_name",
+            "'spend more than a hundred dollars on an expense' refers to expense.cost > 100"
+        ]
+    },
+    "70": {
+        "question": "In the events with more than fifty incomes, list the city and country in which the event is happening.",
+        "GT_SQL": "SELECT DISTINCT T3.city, T3.county FROM income AS T1 INNER JOIN member AS T2 INNER JOIN zip_code AS T3 ON T3.zip_code = T2.zip WHERE T1.amount > 50",
+        "actual_evidence": [
+            "more than fifty incomes refers to income > 50"
+        ],
+        "generic_evidence_automated": [
+            "'In the events with more than fifty incomes' refers to T1.amount > 50."
+        ],
+        "generic_evidence": [
+            "'more than fifty incomes' refers to income.amount > 50."
+        ]
+    },
+    "71": {
+        "question": "What is the average amount paid by students in a position other than a member?",
+        "GT_SQL": "SELECT CAST(SUM(CASE WHEN T2.position != 'Member' THEN T1.cost ELSE 0 END) AS REAL) / SUM(T1.cost) FROM expense AS T1 INNER JOIN member AS T2 ON T1.link_to_member = T2.member_id INNER JOIN budget AS T3 ON T1.link_to_budget = T3.budget_id INNER JOIN event AS T4 ON T3.link_to_event = T4.event_id",
+        "actual_evidence": [
+            "position other than a member refers to position ! = 'Member'",
+            " average amount paid = DIVIDE( SUM(cost), COUNT(event_id))"
+        ],
+        "generic_evidence_automated": [
+            "'position other than a member' refers to SUM(CASE WHEN member.position != 'Member' THEN expense.cost ELSE 0 END)",
+            "'average amount paid by students in a position other than a member' refers to SUM(CASE WHEN member.position != 'Member' THEN expense.cost ELSE 0 END) / SUM(expense.cost)"
+        ],
+        "generic_evidence": [
+            "'position other than a member' refers to member.position != 'Member'",
+            "'amount paid by students in a position other than a member' refers to CAST(SUM(CASE WHEN T2.position != 'Member' THEN T1.cost ELSE 0 END) AS REAL)"
+        ]
+    },
+    "72": {
+        "question": "What is the percentage of the cost for the game events?",
+        "GT_SQL": "SELECT SUM(CASE WHEN T1.type = 'Game' THEN T3.cost ELSE 0 END) / SUM(T3.cost) FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget",
+        "actual_evidence": [
+            "game events refers to type = 'Game'",
+            " percentage = DIVIDE( SUM(cost), COUNT(event_id)) * 100"
+        ],
+        "generic_evidence_automated": [
+            "'cost for the game events' refers to SUM(CASE WHEN event.type = 'Game' THEN expense.cost ELSE 0 END)",
+            "'percentage of the cost for the game events' refers to SUM(CASE WHEN event.type = 'Game' THEN expense.cost ELSE 0 END) / SUM(expense.cost)"
+        ],
+        "generic_evidence": [
+            "'game events' refers to event.type = 'Game'",
+            "'cost for the game events' refers to SUM(CASE WHEN event.type = 'Game' THEN expense.cost ELSE 0 END)"
+        ]
+    },
+    "73": {
+        "question": "Calculate the difference in the percentage of members in Maine and Vermont.",
+        "GT_SQL": "SELECT CAST((SUM(CASE WHEN T2.state = 'Maine' THEN 1 ELSE 0 END) - SUM(CASE WHEN T2.state = 'Vermont' THEN 1 ELSE 0 END)) AS REAL) * 100 / COUNT(T1.member_id) AS diff FROM member AS T1 INNER JOIN zip_code AS T2 ON T2.zip_code = T1.zip",
+        "actual_evidence": [
+            "SUBTRACT( DIVIDE( SUM(state = 'Maine'), COUNT(position = 'Member')), DIVIDE( SUM(state = 'Vermont'), COUNT(position = 'Member')) )"
+        ],
+        "generic_evidence_automated": [
+            "'difference in the percentage of members in Maine and Vermont' refers to (SUM(CASE WHEN zip_code.state = 'Maine' THEN 1 ELSE 0 END) - SUM(CASE WHEN zip_code.state = 'Vermont' THEN 1 ELSE 0 END)) * 100 / COUNT(member.member_id)"
+        ],
+        "generic_evidence": [
+            "'members in Maine' refers to SUM(CASE WHEN zip_code.state = 'Maine' THEN 1 ELSE 0 END",
+            "'percentage of members in Maine' refers to CAST(SUM(CASE WHEN zip_code.state = 'Maine' THEN 1 ELSE 0 END) * 100 / COUNT(member.member_id)"
+        ]
+    },
+    "74": {
+        "question": "List the last names of students under the Elementary Education major and include their phone numbers.",
+        "GT_SQL": "SELECT T1.last_name, T1.phone FROM member AS T1 INNER JOIN major AS T2 ON T2.major_id = T1.link_to_major WHERE T2.major_name = 'Elementary Education'",
+        "actual_evidence": [
+            "'Elementary Education' is the major name",
+            " phone numbers refers to phone"
+        ],
+        "generic_evidence_automated": [
+            "'Elementary Education major' refers to major.major_name = 'Elementary Education'",
+            "'phone numbers' refers to T1.phone and 'students under the Elementary Education major' refers to T2.major_name = 'Elementary Education'"
+        ],
+        "generic_evidence": [
+            "'Elementary Education major' refers to major.major_name = 'Elementary Education'",
+            "'phone numbers' refers to member.phone"
+        ]
+    },
+    "75": {
+        "question": "Which budget category does the expense 'Posters' fall to?",
+        "GT_SQL": "SELECT DISTINCT T2.category FROM expense AS T1 INNER JOIN budget AS T2 ON T1.link_to_budget = T2.budget_id WHERE T1.expense_description = 'Posters'",
+        "actual_evidence": [
+            "'Posters' refers to expense description"
+        ],
+        "generic_evidence_automated": [
+            "'expense 'Posters' fall to' refers to T1.expense_description"
+        ],
+        "generic_evidence": [
+            "'Which budget category' refers to budget.category",
+            "'expense 'Posters'' refers to expense.expense_description"
+        ]
+    },
+    "76": {
+        "question": "Write the full name of the club member with the position of 'Secretary' and list which college the club member belongs to.",
+        "GT_SQL": "SELECT T1.first_name, T1.last_name, college FROM member AS T1 INNER JOIN major AS T2 ON T2.major_id = T1.link_to_major WHERE T1.position = 'Secretary'",
+        "actual_evidence": [
+            "full name refers to first_name, last name"
+        ],
+        "generic_evidence_automated": [
+            "The full name of the club member with the position of 'Secretary' and list which college the club member belongs to refers to SELECT T1.first_name, T1.last_name, T2.college FROM member INNER JOIN major AS T2 ON T2.major_id = member.link_to_major WHERE member.position = 'Secretary'"
+        ],
+        "generic_evidence": [
+            "'full name of the club member' to refers to member.first_name AND member.last_name",
+            "'position of Secretary' refers to member.position = 'Secretary'"
+        ]
+    },
+    "77": {
+        "question": "Calculate the total amount spent on speaker gifts and list the name of the event they were spent on.",
+        "GT_SQL": "SELECT SUM(T1.spent), T2.event_name FROM budget AS T1 INNER JOIN event AS T2 ON T1.link_to_event = T2.event_id WHERE T1.category = 'Speaker Gifts'",
+        "actual_evidence": [
+            "total amount spent = SUM(spent) where category = 'Speaker Gifts'"
+        ],
+        "generic_evidence_automated": [
+            "'total amount spent on speaker gifts' refers to SUM(budget.spent) where budget.category = 'Speaker Gifts'"
+        ],
+        "generic_evidence": [
+            "'total amount spent' refers to SUM(budget.spent)",
+            "'category of speaker gifts' refers to budget.category = 'Speaker Gifts'"
+        ]
+    },
+    "78": {
+        "question": "Where is the hometown of Garrett Girke?",
+        "GT_SQL": "SELECT T2.city FROM member AS T1 INNER JOIN zip_code AS T2 ON T2.zip_code = T1.zip WHERE T1.first_name = 'Garrett' AND T1.last_name = 'Gerke'",
+        "actual_evidence": [
+            "hometown refers to city"
+        ],
+        "generic_evidence_automated": [
+            "The hometown of Garrett Girke refers to T2.city."
+        ],
+        "generic_evidence": [
+            "'The hometown' refers to zip_code.city."
+        ]
+    }
+}

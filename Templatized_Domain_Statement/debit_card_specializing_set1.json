@@ -1,0 +1,396 @@
+{
+    "0": {
+        "question": "How many gas stations in CZE has Premium gas?",
+        "GT_SQL": "SELECT COUNT(GasStationID) FROM gasstations WHERE Country = 'CZE' AND Segment = 'Premium'",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    },
+    "1": {
+        "question": "What is the ratio of costumers who pay in EUR against customers who pay in CZK?",
+        "GT_SQL": "SELECT CAST(SUM(IIF(Currency = 'EUR', 1, 0)) AS FLOAT) / SUM(IIF(Currency = 'CZK', 1, 0)) FROM customers",
+        "actual_evidence": [
+            "ratio of costumers who pay in EUR against customers who pay in CZK = count(Currency = 'EUR') / count(Currency = 'CZK')."
+        ],
+        "intermediate_evidence": [
+            "'ratio of costumers who pay in EUR against customers who pay in CZK' refers to calculation = count(Currency = 'EUR') / count(Currency = 'CZK')"
+        ],
+        "generic_evidence": [
+            "'customers who pay in EUR' refers to SUM(IIF(customers.Currency = 'EUR', 1, 0))"
+        ]
+    },
+    "2": {
+        "question": "What was the average monthly consumption of customers in SME for the year 2013?",
+        "GT_SQL": "SELECT AVG(T2.Consumption) / 12 FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTRING(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME'",
+        "actual_evidence": [
+            "Average Monthly consumption = AVG(Consumption) / 12",
+            " Year 2013 can be presented as Between 201301 And 201312, which means between January and December in 2013"
+        ],
+        "intermediate_evidence": [
+            "'average monthly consumption of customers in SME for the year 2013' refers to calculation = AVG(Consumption) / 12",
+            "'Year 100' refers to SUBSTRING(Date, 1, 4) = 2013"
+        ],
+        "generic_evidence": [
+            "'average monthly consumption of customers in SME for the year {100}' refers to  AVG(yearmonth.Consumption) / 12",
+            "'Year {100}' refers to SUBSTRING(yearmonth.Date, 1, 4) = '100'"
+        ]
+    },
+    "3": {
+        "question": "What was the difference in gas consumption between CZK-paying customers and EUR-paying customers in 2012?",
+        "GT_SQL": "SELECT SUM(IIF(T1.Currency = 'CZK', T2.Consumption, 0)) - SUM(IIF(T1.Currency = 'EUR', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTRING(T2.Date, 1, 4) = '2012'",
+        "actual_evidence": [
+            "Year 2012 can be presented as Between 201201 And 201212, which means between January and December in 2012",
+            " Difference in Consumption = CZK customers consumption in 2012 - EUR customers consumption in 2012"
+        ],
+        "intermediate_evidence": [
+            "'Year 2012' refers to SUBSTRING(Date, 1, 4) = '2012'",
+            "'Difference in gas consumption between CZK-paying customers and EUR-paying customers in 2012' refers to calculation = SUM(IIF(Currency = 'CZK', Consumption, 0)) - SUM(IIF(Currency = 'EUR', Consumption, 0)) for year(Date) = '2012'"
+        ],
+        "generic_evidence": [
+            "'Year {100}' refers to SUBSTRING(yearmonth.Date, 1, 4) = '100'",
+            "'Difference in gas consumption between CZK-paying customers and EUR-paying customers' refers to SUM(IIF(customers.Currency = 'CZK', yearmonth.Consumption, 0)) - SUM(IIF(customers.Currency = 'EUR', yearmonth.Consumption, 0))"
+        ]
+    },
+    "4": {
+        "question": "Which year recorded the most gas use paid in EUR?",
+        "GT_SQL": "SELECT SUBSTRING(T2.Date, 1, 4) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'EUR' GROUP BY SUBSTRING(T2.Date, 1, 4) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    },
+    "5": {
+        "question": "Which year recorded the most consumption of gas paid in CZK?",
+        "GT_SQL": "SELECT SUBSTRING(T2.Date, 1, 4) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'CZK' GROUP BY SUBSTRING(T2.Date, 1, 4) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+        "actual_evidence": [
+            "The first 4 strings of the values in the table yearmonth can represent year."
+        ],
+        "intermediate_evidence": [
+            "'Which year' refers to SUBSTRING(yearmonth.Date, 1, 4)"
+        ],
+        "generic_evidence": [
+            "'Which year' refers to SUBSTRING(yearmonth.Date, 1, 4)"
+        ]
+    },
+    "6": {
+        "question": "What was the gas consumption peak month for SME customers in 2013?",
+        "GT_SQL": "SELECT SUBSTRING(T2.Date, 5, 2) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE SUBSTRING(T2.Date, 1, 4) = '2013' AND T1.Segment = 'SME' GROUP BY SUBSTRING(T2.Date, 5, 2) ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+        "actual_evidence": [
+            "'in 2013' refers to the first 4 strings of yearmonth.date = '2013', The 5th and 6th string of the date can refer to month."
+        ],
+        "intermediate_evidence": [
+            "'in 2013' refers to SUBSTRING(Date, 1, 4) = '2013'", 
+            "'gas consumption peak month' refers to SUBSTRING(Date, 5, 2)"
+        ],
+        "generic_evidence": [
+            "'in the year {100}' refers to SUBSTRING(yearmonth.Date, 1, 4) = '100'", 
+            "'gas consumption month' refers to SUBSTRING(yearmonth.Date, 5, 2)"
+        ]
+    },
+    "7": {
+        "question": "Which of the three segments\u2014SME, LAM and KAM\u2014has the biggest and lowest percentage increases in consumption paid in EUR between 2012 and 2013?",
+        "GT_SQL": "SELECT CAST((SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2012%', T2.Consumption, 0))) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'SME' AND T2.Date LIKE '2012%', T2.Consumption, 0)), CAST(SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'LAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) , CAST(SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2013%', T2.Consumption, 0)) - SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) AS FLOAT) * 100 / SUM(IIF(T1.Segment = 'KAM' AND T2.Date LIKE '2012%', T2.Consumption, 0)) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID",
+        "actual_evidence": [
+            "Increase or Decrease = consumption for 2013 - consumption for 2012",
+            " Percentage of Increase = (Increase or Decrease / consumption for 2013) * 100%",
+            " Between 2012 And 2013 can be represented by Between 201201 And 201312",
+            " First 4 strings of Date represents the year."
+        ],
+        "intermediate_evidence": [
+            "'percentage increases in consumption paid in EUR between 2012 and 2013' refers to calculation = (SUM(consumption for 2013) - SUM(consumption for 2012)) * 100 / SUM(consumption for 2012) for each segment (SME, LAM, KAM)",
+            "'Percentage of Increase' refers to (Increase / consumption for 2013) * 100%",
+            "'Between 2012 and 2013' refers to 'Between 201201 and 201312'",
+            "'First 4 strings of Date represents the year' refers to SUBSTRING(Date, 1, 4)"
+        ],
+        "generic_evidence": [
+            "'increase in consumption paid in EUR between years {100} and {100}' refers to  CAST((SUM(IIF(yearmonth.Date LIKE '100%', yearmonth.Consumption, 0)) - SUM(IIF(yearmonth.Date LIKE '100%', yearmonth.Consumption, 0))) AS FLOAT)",
+            "'percentage increases in consumption paid in EUR between years {100} and {100}' refers to  CAST((SUM(IIF(yearmonth.Date LIKE '100%', yearmonth.Consumption, 0)) - SUM(IIF(yearmonth.Date LIKE '100%', yearmonth.Consumption, 0))) AS FLOAT) * 100 / SUM(IIF(yearmonth.Date LIKE '100%', yearmonth.Consumption, 0))",
+            "'Date between the year {100} and {100}' refers to 'yearmonth.Date BETWEEN 10001 and 10012'"
+        ]
+    },
+    "8": {
+        "question": "How much did customer 6 consume in total between August and November 2013?",
+        "GT_SQL": "SELECT SUM(Consumption) FROM yearmonth WHERE CustomerID = 6 AND Date BETWEEN '201308' AND '201311'",
+        "actual_evidence": [
+            "Between August And November 2013 refers to Between 201308 And 201311",
+            " First 4 strings of Date represents the year."
+        ],
+        "intermediate_evidence": [
+            "'Between August And November 2013' refers to 'Between 201308 And 201311'"
+        ],
+        "generic_evidence": [
+            "'Between August And November 100' refers to 'yearmonth.Date BETWEEN 10008 And 10011'"
+        ]
+    },
+    "9": {
+        "question": "How many more \"discount\" gas stations does the Czech Republic have compared to Slovakia?",
+        "GT_SQL": "SELECT SUM(IIF(Country = 'CZE', 1, 0)) - SUM(IIF(Country = 'SVK', 1, 0)) FROM gasstations WHERE Segment = 'Discount'",
+        "actual_evidence": [
+            "Computation of more discount = Total no. of discount gas stations in Czech Republic - Total no. of discount gas stations in Slovakia"
+        ],
+        "intermediate_evidence": [
+            "'How many more \"discount\" gas stations does the Czech Republic have compared to Slovakia' refers to computation of more discount = Total no. of discount gas stations in Czech Republic - Total no. of discount gas stations in Slovakia"
+        ],
+        "generic_evidence": [
+            "'more gas stations does the Czech Republic have compared to Slovakia' refers to  SUM(IIF(gasstations.Country = 'CZE', 1, 0)) - SUM(IIF(gasstations.Country = 'SVK', 1, 0))"
+        ]
+    },
+    "10": {
+        "question": "How many percent of LAM customer consumed more than 46.73?",
+        "GT_SQL": "SELECT CAST(SUM(IIF(T2.Consumption > 46.73, 1, 0)) AS FLOAT) * 100 / COUNT(T1.CustomerID) FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM'",
+        "actual_evidence": [
+            "Percentage of LAM customer consumed more than 46.73 = (Total no. of LAM customers who consumed more than 46.73 / Total no. of LAM customers) * 100%."
+        ],
+        "intermediate_evidence": [
+            "'Percentage of LAM customer consumed more than 46.73' refers to calculation = (COUNT(CustomerID) where Segment = 'LAM' and Consumption > 46.73 / COUNT(CustomerID) where Segment = 'LAM') * 100%"
+        ],
+        "generic_evidence": [
+            "'Percentage of customer consumed more than {100}' refers to  SELECT CAST(SUM(IIF(yearmonth.Consumption > 100, 1, 0)) AS FLOAT) * 100 / COUNT(customers.CustomerID)"
+        ]
+    },
+    "11": {
+        "question": "What percentage of Slovakian gas stations are premium?",
+        "GT_SQL": "SELECT CAST(SUM(IIF(Segment = 'Premium', 1, 0)) AS FLOAT) * 100 / COUNT(GasStationID) FROM gasstations WHERE Country = 'SVK'",
+        "actual_evidence": [
+            "Percentage of premium gas station = (Total of premium gas station in Slovakia / Total of gas station in Slovakia) * 100%."
+        ],
+        "intermediate_evidence": [
+            "'Percentage of Slovakian gas stations are premium' refers to calculation = (Total of premium gas station in Slovakia / Total of gas station in Slovakia) * 100%"
+        ],
+        "generic_evidence": [
+            "'Percentage of gas stations are premium' refers to  CAST(SUM(IIF(gasstations.Segment = 'Premium', 1, 0)) AS FLOAT) * 100 / COUNT(gasstations.GasStationID)"
+        ]
+    },
+    "12": {
+        "question": "Which client ID consumed the most in September 2013?",
+        "GT_SQL": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '201309' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) DESC LIMIT 1",
+        "actual_evidence": [
+            "September 2013 refers to yearmonth.date = '201309'"
+        ],
+        "intermediate_evidence": [
+            "'September 2013' refers to yearmonth.Date = '201309'"
+        ],
+        "generic_evidence": [
+            "'September 100' refers to yearmonth.Date = '10009'"
+        ]
+    },
+    "13": {
+        "question": "Which client segment consumed the least in September 2013?",
+        "GT_SQL": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '201309' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+        "actual_evidence": [
+            "September 2013 refers to yearmonth.date = '201309'"
+        ],
+        "intermediate_evidence": [
+            "'September 2013' refers to yearmonth.date = '201309'"
+        ],
+        "generic_evidence": [
+            "'September 100' refers to yearmonth.Date = '10009'"
+        ]
+    },
+    "14": {
+        "question": "Which SME customer consumed the least in June 2012?",
+        "GT_SQL": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Date = '201206' AND T1.Segment = 'SME' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+        "actual_evidence": [
+            "June 2012 refers to yearmonth.date = '201606'"
+        ],
+        "intermediate_evidence": [
+            "'June 2012' refers to yearmonth.Date = '201206'"
+        ],
+        "generic_evidence": [
+            "'June 100' refers to yearmonth.Date = '10006'"
+        ]
+    },
+    "15": {
+        "question": "What is the biggest monthly consumption of the customers who use euro as their currency?",
+        "GT_SQL": "SELECT T2.Consumption FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Currency = 'EUR' ORDER BY T2.Consumption DESC LIMIT 1",
+        "actual_evidence": [
+            "Monthly consumption = SUM(consumption) / 12"
+        ],
+        "intermediate_evidence": [
+            "'biggest monthly consumption' refers to MAX(Consumption)"
+        ],
+        "generic_evidence": [
+            "'biggest monthly consumption of customers' refers to ORDER BY yearmonth.Consumption DESC LIMIT 1"
+        ]
+    },
+    "16": {
+        "question": "Please list the product description of the products consumed in September, 2013.",
+        "GT_SQL": "SELECT T3.Description FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Date = '201309'",
+        "actual_evidence": [
+            "September 2013 refers to 201309",
+            " First 4 strings represent the year"
+        ],
+        "intermediate_evidence": [
+            "'September, 2013' refers to '201309'",
+            "'products consumed in September, 2013' refers to T2.Date = '201309'"
+        ],
+        "generic_evidence": [
+            "'September, {100}' refers to yearmonth.Date = '10009'",
+            "'September, {100}' refers to yearmonth.Date = '10009'"
+        ]
+    },
+    "17": {
+        "question": "Please list the product description of the products bought in transactions in euro.",
+        "GT_SQL": "SELECT DISTINCT T1.ProductID, T3.Description FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID INNER JOIN products AS T3 ON T1.ProductID = T3.ProductID WHERE T2.Currency = 'EUR'",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    },
+    "18": {
+        "question": "Among the customers who paid in euro, how many of them have a monthly consumption of over 1000?",
+        "GT_SQL": "SELECT COUNT(*) FROM yearmonth AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.Currency = 'EUR' AND T1.Consumption > 1000.00",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    },
+    "19": {
+        "question": "Please list the disparate time of the transactions taken place in the gas stations from chain no. 11.",
+        "GT_SQL": "SELECT DISTINCT T1.Date, T1.Time FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T2.ChainID = 11",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    },
+    "20": {
+        "question": "How many transactions were paid in EUR in the morning of 2012/8/26?",
+        "GT_SQL": "SELECT COUNT(T1.TransactionID) FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-26' AND T1.Time < '13:00:00' AND T2.Currency = 'EUR'",
+        "actual_evidence": [
+            "'2012/8/26' can be represented by '2012-08-26'",
+            " The morning refers to the time before '13:00:00'"
+        ],
+        "intermediate_evidence": [
+            "'2012/8/26' refers to Date = '2012-08-26'",
+            "'The morning' refers to the time before '13:00:00'"
+        ],
+        "generic_evidence": [
+            "'Date in format 100/100/100' refers to transactions_1k.Date = '100-100-100'",
+            "'The morning' refers to transactions_1k.Time < '13:00:00'"
+        ]
+    },
+    "21": {
+        "question": "For the earliest customer, what segment did he/she have?",
+        "GT_SQL": "SELECT T2.Segment FROM transactions_1k AS T1 INNER JOIN customers AS T2 ON T1.CustomerID = T2.CustomerID ORDER BY Date ASC LIMIT 1",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    },
+    "22": {
+        "question": "For the deal happened at 2012/8/24 12:42:00, which country was it?",
+        "GT_SQL": "SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-24' AND T1.Time = '12:42:00'",
+        "actual_evidence": [
+            "'2012/8/24 12:42:00' can refer to date = '2012-08-24' AND T1.time = '12:42:00' in the database",
+            "'2012/8/24 12:42:00' can refer to date = '2012-08-24' AND T1.time = '12:42:00' in the database"
+        ],
+        "intermediate_evidence": [
+            "'2012/8/24 12:42:00' refers to date = '2012-08-24' AND time = '12:42:00' in the database",
+            "'2012/8/24 12:42:00' refers to date = '2012-08-24' AND time = '12:42:00' in the database"
+        ],
+        "generic_evidence": [
+            "'Date in format 100/100/100' refers to transactions_1k.Date = '100-100-100'",
+            "'Time in format 100:100:100' refers to transactions_1k.Time = '100:100:100'"
+        ]
+    },
+    "23": {
+        "question": "What was the product name of the transaction happened at 2012/8/23 21:20:00?",
+        "GT_SQL": "SELECT T1.ProductID FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-23' AND T1.Time = '21:20:00'",
+        "actual_evidence": [
+            "'2012/8/23 21:20:00' can refer to date = '2012-08-23' AND T1.time = '21:20:00' in the database",
+            "'2012/8/23 21:20:00' can refer to date = '2012-08-23' AND T1.time = '21:20:00' in the database"
+        ],
+        "intermediate_evidence": [
+            "'2012/8/23 21:20:00' refers to date = '2012-08-23' AND time = '21:20:00' in the database",
+            "'2012/8/23 21:20:00' refers to date = '2012-08-23' AND time = '21:20:00' in the database"
+        ],
+        "generic_evidence": [
+            "'Date in format 100/100/100' refers to transactions_1k.Date = '100-100-100'",
+            "'Time in format 100:100:100' refers to transactions_1k.Time = '100:100:100'"
+        ]
+    },
+    "24": {
+        "question": "For the customer who paid 124.05 in 2012/8/24, how much did he/she spend during the January of 2012? And what is the date and expenses exactly?",
+        "GT_SQL": "SELECT T1.CustomerID, T2.Date, T2.Consumption FROM transactions_1k AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Date = '2012-08-24' AND T1.Price = 124.05 AND T2.Date = '201201'",
+        "actual_evidence": [
+            "'2012/8/24' can be represented by '2012-08-24'",
+            " expense and the consumption has the similar meaning."
+        ],
+        "intermediate_evidence": [
+            "'2012/8/24' refers to '2012-08-24'",
+            "'expense' refers to 'consumption' and both have similar meaning."
+        ],
+        "generic_evidence": [
+            "'Date in format 100/100/100' refers to transactions_1k.Date = '100-100-100'",
+            "'he/she spend means expense' refers to 'yearmonth.Consumption'"
+        ]
+    },
+    "25": {
+        "question": "Which country was the card owner of No.667467 in?",
+        "GT_SQL": "SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.CardID = '667467'",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    },
+    "26": {
+        "question": "What's the nationality of the customer who spent 548.4 in 2012/8/24?",
+        "GT_SQL": "SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.Date = '2012-08-24' AND T1.Price = 548.4",
+        "actual_evidence": [
+            "'2012/8/24' can be represented by '2012-08-24'"
+        ],
+        "intermediate_evidence": [
+            "'2012/8/24' refers to '2012-08-24'"
+        ],
+        "generic_evidence": [
+            "'Date in format 100/100/100' refers to transactions_1k.Date = '100-100-100'"
+        ]
+    },
+    "27": {
+        "question": "Which gas station has the highest amount of revenue?",
+        "GT_SQL": "SELECT GasStationID FROM transactions_1k GROUP BY GasStationID ORDER BY SUM(Price) DESC LIMIT 1",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    },
+    "28": {
+        "question": "What is the amount spent by customer \"38508\" at the gas stations? How much had the customer spent in January 2012?",
+        "GT_SQL": "SELECT SUM(T1.Price) , SUM(IIF(T3.Date = '201201', T1.Price, 0)) FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T1.CustomerID = '38508'",
+        "actual_evidence": [
+            "January 2012 refers '201201' in the table transactions_1k"
+        ],
+        "intermediate_evidence": [
+            "'January 2012' refers to '201201' in the table transactions_1k"
+        ],
+        "generic_evidence": [
+            "'January {100}' refers to yearmonth.Date = '10001'"
+        ]
+    },
+    "29": {
+        "question": "Which are the top five best selling products? Please state the full name of them.",
+        "GT_SQL": "SELECT T2.Description FROM transactions_1k AS T1 INNER JOIN products AS T2 ON T1.ProductID = T2.ProductID ORDER BY T1.Amount DESC LIMIT 5",
+        "actual_evidence": [
+            "Description of products contains full name"
+        ],
+        "intermediate_evidence": [
+            "'full name of products' refers to Description of products"
+        ],
+        "generic_evidence": [
+            "'full name of products' refers to products.Description"
+        ]
+    },
+    "30": {
+        "question": "Who is the top spending customer and how much is the average price per single item purchased by this customer? What currency was being used?",
+        "GT_SQL": "SELECT T2.CustomerID, SUM(T2.Price / T2.Amount), T1.Currency FROM customers AS T1 INNER JOIN transactions_1k AS T2 ON T1.CustomerID = T2.CustomerID WHERE T2.CustomerID = ( SELECT CustomerID FROM yearmonth ORDER BY Consumption DESC LIMIT 1 ) GROUP BY T2.CustomerID, T1.Currency",
+        "actual_evidence": [
+            "verage price per single item = price / amount"
+        ],
+        "intermediate_evidence": [
+            "'average price per single item purchased by this customer' refers to calculation = price / amount"
+        ],
+        "generic_evidence": [
+            "'average price per single item purchased by this customer' refers to SUM(transactions_1k.Price / transactions_1k.Amount)"
+        ]
+    },
+    "31": {
+        "question": "Which country had the gas station that sold the most expensive product id No.2 for one unit?",
+        "GT_SQL": "SELECT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID WHERE T1.ProductID = 2 ORDER BY T1.Price DESC LIMIT 1",
+        "actual_evidence": [],
+        "intermediate_evidence": [],
+        "generic_evidence": []
+    }
+}

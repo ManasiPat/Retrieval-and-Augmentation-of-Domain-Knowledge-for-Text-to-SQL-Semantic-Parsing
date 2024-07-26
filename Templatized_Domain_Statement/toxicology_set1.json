@@ -1,0 +1,1594 @@
+{
+  "0": {
+    "question": "Calculate the average number of oxygen atoms in single-bonded molecules.",
+    "GT_SQL": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element = 'o' THEN T1.molecule_id ELSE NULL END) AS REAL) / COUNT(DISTINCT T1.molecule_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '-'",
+    "actual_evidence": [
+      "single-bonded molecules refers to bond_type = '-' ",
+      " average number of oxygen atom = AVG(element = 'o')"
+    ],
+    "intermediate_evidence": [
+      "'single-bonded molecules' refers to bond_type = '-'",
+      "'average number of oxygen atoms in single-bonded molecules' refers to calculation = AVG(element = 'o')"
+    ],
+    "generic_evidence": [
+      "'single-bonded molecules' refers to bond.bond_type = '-'",
+      "'average number of oxygen atoms in single-bonded molecules' refers to CAST(COUNT(DISTINCT CASE WHEN atom.element = 'o' THEN atom.molecule_id ELSE NULL END) AS REAL) / COUNT(DISTINCT atom.molecule_id)"
+    ]
+  },
+  "1": {
+    "question": "In the molecule containing sodium atoms, how many are non-carcinogenic?",
+    "GT_SQL": "SELECT COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'na' AND T2.label = '-'",
+    "actual_evidence": [
+      "non-carcinogenic refers to label = '-'",
+      " sodium atoms refers to element = 'na'"
+    ],
+    "intermediate_evidence": [
+      "'non-carcinogenic' refers to label = '-'",
+      "'sodium atoms' refers to element = 'na'"
+    ],
+    "generic_evidence": [
+      "'non-carcinogenic' refers to molecule.label = '-'",
+      "'sodium atoms' refers to atom.element = 'na'"
+    ]
+  },
+  "2": {
+    "question": "Find the triple-bonded molecules which are carcinogenic.",
+    "GT_SQL": "SELECT DISTINCT T2.molecule_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '#' AND T2.label = '+'",
+    "actual_evidence": [
+      "triple-bonded molecules refers to bond_type = '#'",
+      " molecules which are carcinogenic refers to label = '+'"
+    ],
+    "intermediate_evidence": [
+      "'triple-bonded molecules' refers to bond_type = '#'",
+      "'carcinogenic' refers to label = '+'"
+    ],
+    "generic_evidence": [
+      "'triple-bonded molecules' refers to bond.bond_type = '#'",
+      "'carcinogenic' refers to molecule.label = '+'"
+    ]
+  },
+  "3": {
+    "question": "What is the percentage of carbon in double-bond molecules?",
+    "GT_SQL": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element = 'c' THEN T1.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T1.atom_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '='",
+    "actual_evidence": [
+      "carbon refers to element = 'c'",
+      " double-bond molecules refers to bond_type = ' = '",
+      " percentage = DIVIDE(SUM(element = 'c'), COUNT(atom_id))"
+    ],
+    "intermediate_evidence": [
+      "carbon refers to element = 'c'",
+      " double-bond molecules refers to bond_type = ' = '",
+      "'percentage of carbon in double-bond molecules' refers to calculation = DIVIDE(SUM(element = 'c'), COUNT(atom_id))"
+    ],
+    "generic_evidence": [
+      "'carbon' refers to atom.element = 'c'",
+      "'double-bond molecules' refers to bond.bond_type = ' = '",
+      "'percentage of carbon in double-bond molecules' refers to CAST(COUNT(DISTINCT CASE WHEN atom.element = 'c' THEN atom.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT atom.atom_id)"
+    ]
+  },
+  "4": {
+    "question": "Of the first 100 molecules in number order, how many are carcinogenic?",
+    "GT_SQL": "SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE molecule_id BETWEEN 'TR000' AND 'TR099' AND T.label = '+'",
+    "actual_evidence": [
+      "first 100 molecules in number order refers to molecule_id between 'TR000' and 'TR099'",
+      " label = '+' means molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'first 100 molecules in number order' refers to molecule_id between 'TR000' and 'TR099'",
+      "'carcinogenic' refers to label = '+'"
+    ],
+    "generic_evidence": [
+      "'first 100 molecules in number order' refers to molecule.molecule_id BETWEEN 'TR000' and 'TR099'",
+      "'carcinogenic' refers to molecule.label = '+'"
+    ]
+  },
+  "5": {
+    "question": "What elements are in the TR004_8_9 bond atoms?",
+    "GT_SQL": "SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id = 'TR004_8_9'",
+    "actual_evidence": [
+      "TR004_8_9 bond atoms refers to bond_id = 'TR004_8_9'",
+      " element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'TR004_8_9 bond atoms' refers to bond_id = 'TR004_8_9'",
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+
+    ],
+    "generic_evidence": [
+      "'bond atoms with X' refers to connected.bond_id = 'X'",
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+
+    ]
+  },
+  "6": {
+    "question": "Which type of label is the most numerous in atoms with hydrogen?",
+    "GT_SQL": "SELECT T.label FROM ( SELECT T2.label, COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'h' GROUP BY T2.label ORDER BY COUNT(T2.molecule_id) DESC LIMIT 1 ) t",
+    "actual_evidence": [
+      "with hydrogen refers to element = 'h'",
+      " label most numerous in atoms refers to MAX(COUNT(label))",
+      " label = '+' mean molecules are carcinogenic",
+      " label = '-' means molecules are non-carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'atoms with hydrogen' refers to element = 'h'",
+      "'the most numerous label' refers to MAX(COUNT(label))",
+      " '+' label refers to molecules are carcinogenic",
+      " '-' label refers to molecules are non-carcinogenic"
+    ],
+    "generic_evidence": [
+      "'atoms with hydrogen' refers to atom.element = 'h'",
+      "'the most numerous label' refers to MAX(COUNT(molecule.label))",
+      "'carcinogenic' refers to molecule.label = '+'",
+      "'non-carcinogenic' refers to molecule.label = '-'"
+    ]
+  },
+  "7": {
+    "question": "Tellurium is in what type of bond?",
+    "GT_SQL": "SELECT DISTINCT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id INNER JOIN atom AS T3 ON T2.atom_id = T3.atom_id WHERE T3.element = 'te'",
+    "actual_evidence": [
+      "type of bond refers to bond_type",
+      " Tellurium refers to atom.element = 'te'"
+    ],
+    "intermediate_evidence": [
+      "'type of bond' refers to bond_type",
+      "'Tellurium' refers to element = 'te'"
+    ],
+    "generic_evidence": [
+      "'type of bond' refers to bond.bond_type",
+      "'Tellurium' refers to atom.element = 'te'"
+    ]
+  },
+  "8": {
+    "question": "Indicate which atoms are connected in non-carcinogenic type molecules.",
+    "GT_SQL": "SELECT DISTINCT T1.atom_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN connected AS T3 ON T1.atom_id = T3.atom_id WHERE T2.label = '-'",
+    "actual_evidence": [
+      "label = '-' means molecules are non-carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'non-carcinogenic type molecules' refers to molecules with label = '-'"
+    ],
+    "generic_evidence": [
+      "'non-carcinogenic type molecules' refers to molecules with molecule.label = '-'"
+    ]
+  },
+  "9": {
+    "question": "What type of bond is there between the atoms TR004_8 and TR004_20?",
+    "GT_SQL": "SELECT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.atom_id = 'TR004_8' AND T2.atom_id2 = 'TR004_20' OR T2.atom_id2 = 'TR004_8' AND T2.atom_id = 'TR004_20'",
+    "actual_evidence": [
+      "type of bond refers to bond_type",
+      " between the atoms TR004_8 and TR004_20 refers to atom_id between atom_id = 'TR004_8' and atom_id = 'TR004_20'"
+    ],
+    "intermediate_evidence": [
+      "'type of bond' refers to bond_type",
+      " between the atoms TR004_8 and TR004_20 refers to atom_id between atom_id = 'TR004_8' and atom_id = 'TR004_20'"
+    ],
+    "generic_evidence": [
+      "'type of bond' refers to bond.bond_type",
+      " between the atoms TR004_8 and TR004_20 refers to atom_id between atom_id = 'TR004_8' and atom_id = 'TR004_20'"
+    ]
+  },
+  "10": {
+    "question": "How many atoms with iodine and sulfur type elements are there in single bond molecules?",
+    "GT_SQL": "SELECT COUNT(DISTINCT CASE WHEN T1.element = 'i' THEN T1.atom_id ELSE NULL END) AS iodine_nums , COUNT(DISTINCT CASE WHEN T1.element = 's' THEN T1.atom_id ELSE NULL END) AS sulfur_nums FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T2.bond_id = T3.bond_id WHERE T3.bond_type = '-'",
+    "actual_evidence": [
+      "with iodine element refer to element = 'i'",
+      " with sulfur element refers to element = 's'",
+      " single type bond refers to bond_type = '-'"
+    ],
+    "intermediate_evidence": [
+      "'atoms with iodine element' refers to element = 'i'",
+      "'atoms with sulfur element' refers to element = 's'",
+      "'single bond molecules' refers to bond_type = '-'"
+    ],
+    "generic_evidence": [
+      "'atoms with iodine element' refers to atom.element = 'i'",
+      "'atoms with sulfur element' refers to atom.element = 's'",
+      "'single bond molecules' refers to bond.bond_type = '-'"
+    ]
+  },
+  "11": {
+    "question": "Identify all connected atoms with a triple bond.",
+    "GT_SQL": "SELECT T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.bond_type = '#'",
+    "actual_evidence": [
+      "triple bond refers to bond_type = '#'"
+    ],
+    "intermediate_evidence": [
+      "'triple bond' refers to bond_type = '#'"
+    ],
+    "generic_evidence": [
+      "'triple bond' refers to bond.bond_type = '#'"
+    ]
+  },
+  "12": {
+    "question": "What percentage of carcinogenic-type molecules does not contain fluorine?",
+    "GT_SQL": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element <> 'f' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(DISTINCT T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic",
+      " contain fluorine refers to element = 'f'",
+      " percentage = DIVIDE(SUM(element = 'f'), COUNT(molecule_id)) as percent where label = '+'"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic-type molecules' refers to molecules with label = '+', 'does not contain fluorine' refers to element <> 'f'",
+      "'contain fluorine' refers to element = 'f'",
+      "'percentage of carcinogenic-type molecules does not contain fluorine' refers to calculation = DIVIDE(COUNT(DISTINCT CASE WHEN element <> 'f' THEN molecule_id ELSE NULL END), COUNT(DISTINCT molecule_id)) * 100 where label = '+'"
+    ],
+    "generic_evidence": [
+      "'carcinogenic-type molecules' refers to molecules with molecule.label = '+'",
+      " 'contain fluorine' refers to atom.element = 'f'",
+      "'percentage of molecules does not contain fluorine' refers to DIVIDE(COUNT(DISTINCT CASE WHEN element <> 'f' THEN molecule_id ELSE NULL END), COUNT(DISTINCT molecule_id)) * 100"
+    ]
+  },
+  "13": {
+    "question": "Please list any three elements of the toxicology of the molecule TR000.",
+    "GT_SQL": "SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR000'",
+    "actual_evidence": [
+      "TR000 is the molecule id",
+      " element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'TR000' refers to molecule_id = 'TR000'",
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+
+
+    ],
+    "generic_evidence": [
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+
+    ]
+  },
+  "14": {
+    "question": "What are the atom IDs of the bond TR_000_2_5?",
+    "GT_SQL": "SELECT T.atom_id FROM connected AS T WHERE T.bond_id = 'TR000_2_5'",
+    "actual_evidence": [
+      "TR_000_2_5 is the bond id"
+    ],
+    "intermediate_evidence": [
+      "'TR_000_2_5' refers to value of bond_id column"
+    ],
+    "generic_evidence": [
+      "'TR_000_2_5' refers to column connected.bond_id"
+    ]
+  },
+  "15": {
+    "question": "Please list any five molecules that have double bonds.",
+    "GT_SQL": "SELECT DISTINCT T.molecule_id FROM bond AS T WHERE T.bond_type = '=' LIMIT 5",
+    "actual_evidence": [
+      "double bond refers to bond_type = ' = '"
+    ],
+    "intermediate_evidence": [
+      "'molecules that have double bond' refers to bond_type = '='"
+    ],
+    "generic_evidence": [
+      "'molecules that have double bonds' refers to bond.bond_type = '='"
+    ]
+  },
+  "16": {
+    "question": "What is the percentage of molecules that are carcinogenic?",
+    "GT_SQL": "SELECT CAST(COUNT(CASE WHEN T.label = '+' THEN T.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(T.molecule_id) FROM molecule t",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic",
+      " percentage = DIVIDE(SUM(label = '+'), COUNT(molecule_id)) as percent"
+    ],
+    "intermediate_evidence": [
+      "'molecules that are carcinogenic' refers to label = '+'",
+      "'percentage of molecules that are carcinogenic' refers to calculation = DIVIDE(SUM(label = '+'), COUNT(molecule_id)) as percent"
+    ],
+    "generic_evidence": [
+      "'molecules that are carcinogenic' refers to molecule.label = '+'",
+      "'count of molecules that are carcinogenic' refers to COUNT(CASE WHEN T.label = '+' THEN T.molecule_id ELSE NULL END)"
+    ]
+  },
+  "17": {
+    "question": "What are the elements of the toxicology and label of molecule TR060?",
+    "GT_SQL": "SELECT DISTINCT T1.element, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR060'",
+    "actual_evidence": [
+      "TR060 is the molecule id",
+      " label = '+' mean molecules are carcinogenic",
+      " label = '-' means molecules are non-carcinogenic",
+      " element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'TR060' refers to molecule_id = 'TR060'",
+      " '+' label refers to molecules are carcinogenic",
+      " '-' label refers to molecules are non-carcinogenic",
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+
+    ],
+    "generic_evidence": [
+      "molecule TR060 refers to molecule.molecule_id = 'TR060'",
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+
+    ]
+  },
+  "18": {
+    "question": "How many bonds which involved atom 12 does molecule TR009 have?",
+    "GT_SQL": "SELECT COUNT(T2.bond_id) FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.molecule_id = 'TR009' AND T2.atom_id = T1.molecule_id || '_1' AND T2.atom_id2 = T1.molecule_id || '_2'",
+    "actual_evidence": [
+      "TR009 is the molecule id",
+      "molecule_id = 'TR009' means the bond_id LIKE 'TR009_%'",
+      "involved atom 12 refers to atom_id = 'TR009_12' or atom_id2 = 'TR009_12'"
+    ],
+    "intermediate_evidence": [
+      "'molecule TR009' refers to molecule_id = 'TR009'",
+      "'molecule TR009' refers to molecule_id = 'TR009'",
+      "'involved atom 12' refers to atom_id = 'TR009_12' or atom_id2 = 'TR009_12'"
+    ],
+    "generic_evidence": [
+      "'molecule TR009' refers to molecule.molecule_id = 'TR009'",
+      "'involved atom 12' refers to connected.atom_id = 'TR009_12' or connected.atom_id2 = 'TR009_12'"
+    ]
+  },
+  "19": {
+    "question": "What are the bond type and the atoms of the bond ID of TR001_6_9?",
+    "GT_SQL": "SELECT T1.bond_type, T2.atom_id, T2.atom_id2 FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.bond_id = 'TR001_6_9'",
+    "actual_evidence": [
+      "double bond refers to bond_type = ' = '",
+      " single bond refers to bond_type = '-'",
+      " triple bond refers to bond_type = '#'",
+      " atoms refer to atom_id or atom_id2"
+    ],
+    "intermediate_evidence": [
+      "double bond refers to bond_type = ' = '",
+      " single bond refers to bond_type = '-'",
+      " triple bond refers to bond_type = '#'",
+      "'atoms' refers to either atom_id or atom_id2"
+    ],
+    "generic_evidence": [
+      "double bond refers to bond.bond_type = ' = '",
+      " single bond refers to bond.bond_type = '-'",
+      " triple bond refers to bond.bond_type = '#'",
+      "'atoms' refers to atom.atom_id OR connected.atom_id OR connected.atom_id2"
+    ]
+  },
+  "20": {
+    "question": "Which molecule does the atom TR001_10 belong to? Please state whether this molecule is carcinogenic or not.",
+    "GT_SQL": "SELECT T2.molecule_id , IIF(T2.label = '+', 'YES', 'NO') AS flag_carcinogenic FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.atom_id = 'TR001_10'",
+    "actual_evidence": [
+      "TR001_10 is the atom id",
+      " label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'atom TR001_10' refers to atom_id = 'TR001_10'",
+      "'label = '+' means the molecule is carcinogenic'"
+    ],
+    "generic_evidence": [
+      "'atom TR001_10' refers to atom.atom_id = 'TR001_10'",
+      " molecules is carcinogenic refers to molecule.label = '+'"
+    ]
+  },
+  "21": {
+    "question": "How many molecules have a triple bond type?",
+    "GT_SQL": "SELECT COUNT(DISTINCT T.molecule_id) FROM bond AS T WHERE T.bond_type = '#'",
+    "actual_evidence": [
+      "triple bond refers to bond_type = '#'"
+    ],
+    "intermediate_evidence": [
+      "'molecules with a triple bond type' refers to bond_type = '#'"
+    ],
+    "generic_evidence": [
+      "'molecules with a triple bond type' refers to bond.bond_type = '#'"
+    ]
+  },
+  "22": {
+    "question": "List all the elements of the toxicology of the molecule \"TR004\".",
+    "GT_SQL": "SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR004'",
+    "actual_evidence": [
+      "TR004 is the molecule id",
+      " element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'TR004' refers to molecule_id = 'TR004'",
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+
+
+    ],
+    "generic_evidence": [
+      "'TR004' refers to molecule.molecule_id = 'TR004'",
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+
+    ]
+  },
+  "23": {
+    "question": "How many of the molecules are not carcinogenic?",
+    "GT_SQL": "SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE T.label = '-'",
+    "actual_evidence": [
+      "label = '-' means molecules are non-carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'molecules are not carcinogenic' refers to label = '-'"
+    ],
+    "generic_evidence": [
+      "'molecules are not carcinogenic' refers to molecule.label = '-'"
+    ]
+  },
+  "24": {
+    "question": "What are the bonds that have phosphorus and nitrogen as their atom elements?",
+    "GT_SQL": "SELECT T2.bond_id FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id IN ( SELECT T3.bond_id FROM connected AS T3 INNER JOIN atom AS T4 ON T3.atom_id = T4.atom_id WHERE T4.element = 'p' ) AND T1.element = 'n'",
+    "actual_evidence": [
+      "have phosphorus as atom elements refers to element = 'p'",
+      " have nitrogen as atom elements refers to element = 'n'"
+    ],
+    "intermediate_evidence": [
+      "'have phosphorus as atom elements' refers to element = 'p'",
+      "'have nitrogen as atom elements' refers to element = 'n'"
+    ],
+    "generic_evidence": [
+      "'have phosphorus as atom elements' refers to atom.element = 'p'",
+      "'have nitrogen as atom elements' refers to atom.element = 'n'"
+    ]
+  },
+  "25": {
+    "question": "What is the average number of bonds the atoms with the element iodine have?",
+    "GT_SQL": "SELECT CAST(COUNT(T2.bond_id) AS REAL) / COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T1.element = 'i'",
+    "actual_evidence": [
+      "atoms with the element iodine refers to element = 'i'",
+      " average = DIVIDE(COUND(bond_id), COUNT(atom_id)) where element = 'i'"
+    ],
+    "intermediate_evidence": [
+      "'atoms with the element iodine' refers to element = 'i'",
+      "'average number of bonds the atoms with the element iodine have' refers to calculation = DIVIDE(COUNT(bond_id) where element = 'i', COUNT(atom_id) where element = 'i')"
+    ],
+    "generic_evidence": [
+      "'atoms with the element iodine' refers to atom.element = 'i'",
+      "'average number of bonds the atoms have' refers to CAST(COUNT(connected.bond_id) AS REAL) / COUNT(atom.atom_id)"
+
+    ]
+  },
+  "26": {
+    "question": "List all the elements of atoms that can not bond with any other atoms.",
+    "GT_SQL": "SELECT DISTINCT T.element FROM atom AS T WHERE T.element NOT IN ( SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id )",
+    "actual_evidence": [
+      "element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+
+    ],
+    "generic_evidence": [
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+    ]
+  },
+  "27": {
+    "question": "What are the atoms of the triple bond with the molecule \"TR447\"?",
+    "GT_SQL": "SELECT T2.atom_id, T2.atom_id2 FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T2.bond_id = T3.bond_id WHERE T3.bond_type = '#' AND T3.molecule_id = 'TR447'",
+    "actual_evidence": [
+      "TR447 is the molecule id",
+      " triple bond refers to bond_type = '#'"
+    ],
+    "intermediate_evidence": [
+      "'TR447' refers to molecule_id = 'TR447'",
+      "'triple bond' refers to bond_type = '#'"
+    ],
+    "generic_evidence": [
+      "'TR447' refers to the molecule_id = TR447",
+      "'triple bond' refers to bond.bond_type = '#'"
+    ]
+  },
+  "28": {
+    "question": "What are the elements of the atoms of TR144_8_19?",
+    "GT_SQL": "SELECT T2.element FROM connected AS T1 INNER JOIN atom AS T2 ON T1.atom_id = T2.atom_id WHERE T1.bond_id = 'TR144_8_19'",
+    "actual_evidence": [
+      "TR144_8_19 is the bond id",
+      " element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'TR144_8_19' refers to a value of bond id column",
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+
+
+    ],
+    "generic_evidence": [
+      "'atoms of TR144_8_19' refers to connected.bond_id",
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+
+    ]
+  },
+  "29": {
+    "question": "What is the least common element of all carcinogenic molecules?",
+    "GT_SQL": "SELECT T.element FROM ( SELECT T2.element, COUNT(DISTINCT T2.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.label = '+' GROUP BY T2.element ORDER BY COUNT(DISTINCT T2.molecule_id) LIMIT 1 ) t",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic molecules' refers to molecules with label = '+'"
+    ],
+    "generic_evidence": [
+      "'carcinogenic molecules' refers to molecules with molecule.label = '+'"
+    ]
+  },
+  "30": {
+    "question": "What are the bond type for atoms with element Tin?",
+    "GT_SQL": "SELECT DISTINCT T3.bond_type FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T3.bond_id = T2.bond_id WHERE T1.element = 'sn'",
+    "actual_evidence": [
+      "element Tin refers to element = 'Sn'",
+      " double bond refers to bond_type = ' = '",
+      " single bond refers to bond_type = '-'",
+      " triple bond refers to bond.bond_type = '#'"
+    ],
+    "intermediate_evidence": [
+      "'element Tin' refers to element = 'Sn'"
+    ],
+    "generic_evidence": [
+      "'atoms with element Tin' refers to atom.element = 'Sn'"
+    ]
+  },
+  "31": {
+    "question": "How many elements are there for single bond molecules?",
+    "GT_SQL": "SELECT COUNT(DISTINCT T.element) FROM ( SELECT DISTINCT T2.molecule_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '-' ) AS T",
+    "actual_evidence": [
+      "single bond refers to bond_type = '-'"
+    ],
+    "intermediate_evidence": [
+      "'single bond molecules' refers to bond_type = '-'"
+    ],
+    "generic_evidence": [
+      "'single bond molecules' refers to bond.bond_type = '-'"
+    ]
+  },
+  "32": {
+    "question": "Write down bond id for molecules that are carcinogenic.",
+    "GT_SQL": "SELECT DISTINCT T1.bond_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'molecules that are carcinogenic' refers to molecules with label = '+'"
+    ],
+    "generic_evidence": [
+      "'molecules that are carcinogenic' refers to molecules with molecule.label = '+'"
+    ]
+  },
+  "33": {
+    "question": "Among the single bond molecule id, which molecules are not carcinogenic?",
+    "GT_SQL": "SELECT DISTINCT T1.molecule_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '-' AND T1.bond_type = '-'",
+    "actual_evidence": [
+      "label = '-' means molecules are non-carcinogenic",
+      " single bond refers to bond_type = '-'"
+    ],
+    "intermediate_evidence": [
+      "'molecules are not carcinogenic' refers to label = '-'",
+      "'single bond molecule' refers to bond_type = '-'"
+    ],
+    "generic_evidence": [
+      "'molecules are not carcinogenic' refers to molecule.label = '-'",
+      "'single bond molecule' refers to bond.bond_type = '-'"
+    ]
+  },
+  "34": {
+    "question": "What is the composition of element chlorine in percentage among the single bond molecules?",
+    "GT_SQL": "SELECT CAST(COUNT(CASE WHEN T.element = 'cl' THEN T.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(T.atom_id) FROM ( SELECT T1.atom_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '-' ) AS T",
+    "actual_evidence": [
+      "element chlorine refers to element = 'cl'",
+      " single bond refers to bond_type = '-'",
+      " percentage = DIVIDE(SUM(element = 'cl'), COUNT(atom_id)) as percent where bond_type = '-'"
+    ],
+    "intermediate_evidence": [
+      "'element chlorine' refers to element = 'cl'",
+      "'single bond molecules' refers to bond_type = '-'",
+      "'composition of element chlorine in percentage among the single bond molecules' refers to calculation = DIVIDE(SUM(element = 'cl'), COUNT(atom_id)) as percent where bond_type = '-'"
+    ],
+    "generic_evidence": [
+      "'element chlorine' refers to atom.element = 'cl'",
+      "'single bond molecules' refers to bond.bond_type = '-'",
+      "'composition of element chlorine in percentage among all molecules' refers to CAST(COUNT(CASE WHEN atom.element = 'cl' THEN atom.atom_id ELSE NULL END) AS REAL) * 100 / COUNT(atom.atom_id)"
+    ]
+  },
+  "35": {
+    "question": "Among the molecules with element Calcium, are they mostly carcinogenic or non carcinogenic?",
+    "GT_SQL": "SELECT T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'ca' GROUP BY T2.label ORDER BY COUNT(T2.label) DESC LIMIT 1",
+    "actual_evidence": [
+      "calcium refers to element = 'ca'",
+      " label = '+' mean molecules are carcinogenic",
+      " label = '-' means molecules are non-carcinogenic",
+      " MAX(label)"
+    ],
+    "intermediate_evidence": [
+      "'molecules with element Calcium' refers to element = 'ca'",
+      "'carcinogenic' refers to label = '+'",
+      "'non carcinogenic' refers to label = '-'"
+    ],
+    "generic_evidence": [
+      "'molecules with element Calcium' refers to atom.element = 'ca'",
+      "'carcinogenic' refers to molecule.label = '+'",
+      "'non carcinogenic' refers to molecule.label = '-'"
+    ]
+  },
+  "36": {
+    "question": "Does bond id TR001_1_8 have both element of chlorine and carbon?",
+    "GT_SQL": "SELECT T2.bond_id, T2.atom_id2, T1.element AS flag_have_CaCl FROM atom AS T1 INNER JOIN connected AS T2 ON T2.atom_id = T1.atom_id WHERE T2.bond_id = 'TR001_1_8' AND (T1.element = 'c1' OR T1.element = 'c')",
+    "actual_evidence": [
+      "chlorine refers to element = 'cl'",
+      " carbon refers to element = 'c'"
+    ],
+    "intermediate_evidence": [
+      "'chlorine' refers to element = 'cl'",
+      "'carbon' refers to element = 'c'"
+    ],
+    "generic_evidence": [
+      "'chlorine' refers to atom.element = 'cl'",
+      "'carbon' refers to atom.element = 'c'"
+    ]
+  },
+  "37": {
+    "question": "What is the percentage of element lead in carcinogenic molecules?",
+    "GT_SQL": "SELECT CAST(COUNT(DISTINCT CASE WHEN T1.element = 'pb' THEN T1.element ELSE NULL END) AS REAL) * 100 / COUNT(T1.element) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+    "actual_evidence": [
+      "lead refers to element = 'pb'",
+      " label = '+' mean molecules are carcinogenic",
+      " percentage = DIVIDE(SUM(element = 'pb')",
+      " COUNT(molecule_id)) as percentage where label = '+'"
+    ],
+    "intermediate_evidence": [
+      "'lead' refers to element = 'pb'",
+      "'carcinogenic molecules' refer to label = '+'",
+      "'percentage of element lead in carcinogenic molecules' refers to calculation = DIVIDE(COUNT(DISTINCT CASE WHEN element = 'pb' THEN element ELSE NULL END), COUNT(element)) * 100  T2.label = '+'"
+    ],
+    "generic_evidence": [
+      "lead refers to atom.element = 'pb'",
+      "'carcinogenic molecules' refer to label = '+'",
+      "'percentage of element lead in molecules' refers to CAST(COUNT(DISTINCT CASE WHEN atom.element = 'pb' THEN atom.element ELSE NULL END) AS REAL) * 100 / COUNT(atom.element)"
+    ]
+  },
+  "38": {
+    "question": "What is the label for bond ID TR001_10_11?",
+    "GT_SQL": "SELECT T2.label FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_id = 'TR001_10_11'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic",
+      " label = '-' means molecules are non-carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "label = '+' refers to carcinogenic molecules",
+      "label = '-' refers to non-carcinogenic molecules"
+    ],
+    "generic_evidence": [
+      "carcinogenic molecules refers to molecule.label = '+'",
+      "non-carcinogenic molecules refers to molecule.label = '-'"
+    ]
+  },
+  "39": {
+    "question": "What is the ratio of Hydrogen elements in molecule ID TR006? Please indicate its label.",
+    "GT_SQL": "SELECT CAST(COUNT(CASE WHEN T.element = 'h' THEN T.atom_id ELSE NULL END) AS REAL) / COUNT(T.atom_id) FROM ( SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006' ) AS T UNION ALL SELECT DISTINCT T3.label FROM ( SELECT DISTINCT T1.atom_id, T1.element, T1.molecule_id, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR006' ) AS T3",
+    "actual_evidence": [
+      "hydrogen refers to element = 'h'",
+      " ratio = DIVIDE(SUM(element = 'h'), count(element)) where molecule_id = 'TR006' ",
+      " label = '+' mean molecules are carcinogenic",
+      " label = '-' means molecules are non-carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'Hydrogen elements in molecule ID TR006' refers to element = 'h' for molecule_id = 'TR006'",
+      "'ratio of Hydrogen elements in molecule ID TR006' refers to calculation = DIVIDE(SUM(element = 'h'), count(element)) where molecule_id = 'TR006'",
+      "label = '+' refers to carcinogenic molecules",
+      "label = '-' refers to non-carcinogenic molecules"
+    ],
+    "generic_evidence": [
+      "'Hydrogen elements in molecule ID TR006' refers to atom.element = 'h' where atom.molecule_id = 'TR006'",
+      "'ratio of Hydrogen elements in molecule ID TR006' refers to DIVIDE(SUM(element = 'h'), count(element)) where atom.molecule_id = 'TR006'",
+      "carcinogenic molecules refers to molecule.label = '+'",
+      "non-carcinogenic molecules refers to molecule.label = '-'"
+    ]
+  },
+  "40": {
+    "question": "Name chemical elements that form a bond TR001_10_11.",
+    "GT_SQL": "SELECT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T2.bond_id = T3.bond_id WHERE T3.bond_id = 'TR001_10_11'",
+    "actual_evidence": [
+      "element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium",
+      " TR001_10_11 is the bond id",
+      " molecule id refers to SUBSTR(bond_id, 1, 5)",
+      " atom 1 refers to SUBSTR(bond_id, 7, 2)",
+      " atom 2 refers to SUBSTR(bond_id, 10, 2)"
+    ],
+    "intermediate_evidence": [
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'",
+      "'bond TR001_10_11' refers to bond_id = 'TR001_10_11'"
+    ],
+    "generic_evidence": [
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'",
+      "'bond TR001_10_11' refers to connected.bond_id = 'TR001_10_11'"
+    ]
+  },
+  "41": {
+    "question": "Among all chemical compounds identified in the database, what percent of compounds form a triple-bond.",
+    "GT_SQL": "SELECT CAST(COUNT(CASE WHEN T.bond_type = '#' THEN T.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T.bond_id) FROM bond AS T",
+    "actual_evidence": [
+      "triple bond refers to bond_type = '#'"
+    ],
+    "intermediate_evidence": [
+      "'triple bond' refers to bond_type = '#'"
+    ],
+    "generic_evidence": [
+      "'triple bond' refers to bond.bond_type = '#'"
+    ]
+  },
+  "42": {
+    "question": "Is molecule TR151 carcinogenic?",
+    "GT_SQL": "SELECT T.label FROM molecule AS T WHERE T.molecule_id = 'TR151'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'molecule TR151 carcinogenic' refers to label = '+' for molecule_id = 'TR151'"
+    ],
+    "generic_evidence": [
+      "'molecule TR151 carcinogenic' refers to molecule.label = '+'"
+    ]
+  },
+  "43": {
+    "question": "Which toxic element can be found in the molecule TR151?",
+    "GT_SQL": "SELECT DISTINCT T.element FROM atom AS T WHERE T.molecule_id = 'TR151'",
+    "actual_evidence": [
+      "element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+
+    ],
+    "generic_evidence": [
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+    ]
+  },
+  "44": {
+    "question": "How many chemical compounds in the database are identified as carcinogenic.",
+    "GT_SQL": "SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE T.label = '+'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "identified as carcinogenic molecules refers to '+' label"
+    ],
+    "generic_evidence": [
+      "identified as carcinogenic molecules refers to molecule.label = '+'"
+    ]
+  },
+  "45": {
+    "question": "How many atoms belong to the molecule labeled with carcinogenic compounds?",
+    "GT_SQL": "SELECT COUNT(T1.atom_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'molecule labeled with carcinogenic compounds' refers to molecules with label = '+'"
+    ],
+    "generic_evidence": [
+      "'molecule labeled with carcinogenic compounds' refers to molecules with molecule.label = '+'"
+    ]
+  },
+  "46": {
+    "question": "Which bond ids are double-bond with carcinogenic compound?",
+    "GT_SQL": "SELECT T1.bond_id FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' AND T1.bond_type = '='",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic",
+      " double bond refers to bond_type = ' = '"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic compound' refers to molecules with label = '+'",
+      "'double bond' refers to bond_type = '='"
+    ],
+    "generic_evidence": [
+      "'carcinogenic compound' refers to molecules with molecule.label = '+'",
+      "'double-bond' refers to bond.bond_type = '='"
+    ]
+  },
+  "47": {
+    "question": "How many atoms belong to the molecule that element is hydrogen and labeled with carcinogenic compound?",
+    "GT_SQL": "SELECT COUNT(T1.atom_id) AS atomnums_h FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+' AND T1.element = 'h'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic",
+      " hydrogen refers to element = h'"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic compound' refers to molecules with label = '+'",
+      "'hydrogen' refers to element = 'h'"
+    ],
+    "generic_evidence": [
+      "'carcinogenic compound' refers to molecules with molecule.label = '+'",
+      "'element is hydrogen' refers to atom.element = 'h'"
+    ]
+  },
+  "48": {
+    "question": "Calculate the percentage of molecules containing carcinogenic compounds that element is hydrogen.",
+    "GT_SQL": "SELECT CAST(COUNT(CASE WHEN T1.element = 'h' THEN T2.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+    "actual_evidence": [
+      "hydrogen refers to element = 'h'",
+      " label = '+' mean molecules are carcinogenic",
+      " percentage = DIVIDE(SUM(label = '+' and element = 'h'), COUNT(molecule_id)) * 100.0"
+    ],
+    "intermediate_evidence": [
+      "'hydrogen' refers to element = 'h'",
+      "'molecules containing carcinogenic compounds' refers to molecules with label = '+'",
+      "'percentage of molecules containing carcinogenic compounds that element is hydrogen' refers to calculation = DIVIDE(SUM(label = '+' and element = 'h'), COUNT(molecule_id)) * 100.0"
+    ],
+    "generic_evidence": [
+      "'element is hydrogen' refers to atom.element = 'h'",
+      "'molecules containing carcinogenic compounds' refers to molecules with molecule.label = '+'",
+      "'percentage of molecules containing hydrogen' refers to CAST(COUNT(CASE WHEN atom.element = 'h' THEN molecule.molecule_id ELSE NULL END) AS REAL) * 100 / COUNT(molecule.molecule_id)"
+    ]
+  },
+  "49": {
+    "question": "Is molecule TR124 carcinogenic?",
+    "GT_SQL": "SELECT T.label FROM molecule AS T WHERE T.molecule_id = 'TR124'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic' refers to label = '+'"
+    ],
+    "generic_evidence": [
+      "'carcinogenic' refers to molecule.label = '+'"
+    ]
+  },
+  "50": {
+    "question": "What atoms comprise TR186?",
+    "GT_SQL": "SELECT T.atom_id FROM atom AS T WHERE T.molecule_id = 'TR186'",
+    "actual_evidence": [
+      "TR186 is a molecule id"
+    ],
+    "intermediate_evidence": [
+      "'TR186' is a molecule_id"
+    ],
+    "generic_evidence": [
+      "'TR186' refers to atom.molecule_id"
+    ]
+  },
+  "51": {
+    "question": "How many double bonds does TR006 have and is it carcinogenic?",
+    "GT_SQL": "SELECT COUNT(T1.bond_id), T2.label FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '=' AND T2.molecule_id = 'TR006' GROUP BY T2.label",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic",
+      " label = '-' means molecules are non-carcinogenic",
+      " double bond refers to bond_type = ' = '"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic' refers to label = '+'",
+      "'non-carcinogenic' refers to label = '-'",
+      " 'double bonds' refer to bond_type = ' = '"
+    ],
+    "generic_evidence": [
+      "'carcinogenic' refers to molecule.label = '+'",
+      "'non-carcinogenic' refers to molecule.label = '-'",
+      " 'double bonds' refers to bond.bond_type = ' = '"
+    ]
+  },
+  "52": {
+    "question": "Name all bonds with single bond types and what atoms are connected to the molecules.",
+    "GT_SQL": "SELECT T1.bond_id FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T1.bond_type = '-'",
+    "actual_evidence": [
+      "single bond refers to bond_type = '-'"
+    ],
+    "intermediate_evidence": [
+      "'single bond' refers to bond_type = '-'"
+    ],
+    "generic_evidence": [
+      "'single bond types' refers to bond.bond_type = '-'"
+    ]
+  },
+  "53": {
+    "question": "Which molecules have triple bonds and list all the elements they contain.",
+    "GT_SQL": "SELECT DISTINCT T1.molecule_id, T2.element FROM bond AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '#'",
+    "actual_evidence": [
+      "triple bond refers to bond_type = '#'",
+      " element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'molecules with triple bonds' refers to bond_type = '#'",
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+    ],
+    "generic_evidence": [
+      "'molecules with triple bonds' refers to bond.bond_type = '#'",
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+    ]
+  },
+  "54": {
+    "question": "Name the atoms' elements that form bond TR000_2_3.",
+    "GT_SQL": "SELECT T2.element FROM connected AS T1 INNER JOIN atom AS T2 ON T1.atom_id = T2.atom_id WHERE T1.bond_id = 'TR000_2_3'",
+    "actual_evidence": [
+      "element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+    ],
+    "generic_evidence": [
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+    ]
+  },
+  "55": {
+    "question": "How many bonds are created by bonding atoms with chlorine element?",
+    "GT_SQL": "SELECT COUNT(T1.bond_id) FROM connected AS T1 INNER JOIN atom AS T2 ON T1.atom_id = T2.atom_id WHERE T2.element = 'cl'",
+    "actual_evidence": [
+      "chlorine refers to element = 'c'"
+    ],
+    "intermediate_evidence": [
+      "'chlorine' refers to element = 'cl'"
+    ],
+    "generic_evidence": [
+      "'chlorine' refers to atom.element = 'cl'"
+    ]
+  },
+  "56": {
+    "question": "How many molecules without sulphur element is not having double bond?",
+    "GT_SQL": "SELECT COUNT(DISTINCT T1.molecule_id) FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element <> 's' AND T2.bond_type <> '='",
+    "actual_evidence": [
+      "double bond refers to bond_type = ' = '",
+      " bond_type ! = ' = '",
+      " sulphur refers to element = 's'"
+    ],
+    "intermediate_evidence": [
+      "'double bond' refers to bond_type = ' = '",
+      "'not having double bond' refers to bond_type <> '='",
+      "'molecules without sulphur element' refers to element <= 's'"
+    ],
+    "generic_evidence": [
+      "'double bond' refers to bond.bond_type = ' = '",
+      "'not having double bond' refers to bond_type <> '='",
+      "'molecules without sulphur element' refers to atom.element <= 's'"
+    ]
+  },
+  "57": {
+    "question": "What is the carcinogenic label for bond TR001_2_4?",
+    "GT_SQL": "SELECT DISTINCT T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_id = 'TR001_2_4'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic label' refers to label = '+'"
+    ],
+    "generic_evidence": [
+      "'carcinogenic label' refers to molecule.label = '+'"
+    ]
+  },
+  "58": {
+    "question": "How many atoms belong to molecule id TR005?",
+    "GT_SQL": "SELECT COUNT(T.atom_id) FROM atom AS T WHERE T.molecule_id = 'TR005'",
+    "actual_evidence": [],
+    "intermediate_evidence": [],
+    "generic_evidence": []
+  },
+  "59": {
+    "question": "Among the molecules which contain \"cl\" element, which of them are carcinogenic?",
+    "GT_SQL": "SELECT DISTINCT T1.molecule_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'cl' AND T2.label = '+'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic' refers to label = '+'"
+    ],
+    "generic_evidence": [
+      "'carcinogenic' refers to molecule.label = '+'"
+    ]
+  },
+  "60": {
+    "question": "How many elements are contained in bond_id TR001_3_4?",
+    "GT_SQL": "SELECT COUNT(DISTINCT T1.element) FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id = 'TR001_3_4'",
+    "actual_evidence": [
+      "element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'bond_id TR001_3_4' refers to connected.bond_id = 'TR001_3_4'",
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+    ],
+    "generic_evidence": [
+      "'bond_id TR001_3_4' refers to connected.bond_id = 'TR001_3_4'",
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+    ]
+  },
+  "61": {
+    "question": "What is the type of the bond which is presenting the connection between two atoms TR000_1 and TR000_2?",
+    "GT_SQL": "SELECT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.atom_id = 'TR000_1' AND T2.atom_id2 = 'TR000_2'",
+    "actual_evidence": [
+      "type of bond refers to bond_type",
+      " double bond refers to bond_type = ' = '",
+      " single bond refers to bond_type = '-'",
+      " triple bond refers to bond_type = '#'"
+    ],
+    "intermediate_evidence": [
+      "'type of bond' refers to value of column bond_type"
+    ],
+    "generic_evidence": [
+      "'type of bond' refers to value of column bond.bond_type"
+    ]
+  },
+  "62": {
+    "question": "Is molecule TR000 is carcinogenic or not?",
+    "GT_SQL": "SELECT label FROM molecule AS T WHERE T.molecule_id = 'TR000'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic",
+      " label = '-' means molecules are non-carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic' refers to label = '+'",
+      "'not carcinogenic' refers to label = '-'"
+    ],
+    "generic_evidence": [
+      "'carcinogenic' refers to molecule.label = '+'",
+      "'not carcinogenic' refers to molecule.label = '-'"
+    ]
+  },
+  "63": {
+    "question": "How many carcinogenic molecules that consisted of Nitrogen?",
+    "GT_SQL": "SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.element = 'n' AND T1.label = '+'",
+    "actual_evidence": [
+      "nitrogen refers to element = 'n'",
+      " label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic molecules that consisted of Nitrogen' refers to element = 'n'",
+      "'carcinogenic molecules' refers to molecules with label = '+'"
+    ],
+    "generic_evidence": [
+      "nitrogen refers to atom.element = 'n'",
+      "'carcinogenic molecules' refers to molecules with molecule.label = '+'"
+    ]
+  },
+  "64": {
+    "question": "Which non-carcinogenic molecules consisted more than 5 atoms?",
+    "GT_SQL": "SELECT T.molecule_id FROM ( SELECT T1.molecule_id, COUNT(T2.atom_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.label = '-' GROUP BY T1.molecule_id HAVING COUNT(T2.atom_id) > 5 ) t",
+    "actual_evidence": [
+      "label = '-' means molecules are non-carcinogenic",
+      " molecules consisted more than 5 atoms refers to COUNT(molecule_id) > 5"
+    ],
+    "intermediate_evidence": [
+      "'non-carcinogenic molecules' refers to label = '-'",
+      "'molecules consisted more than 5 atoms' refers to COUNT(molecule_id) > 5"
+    ],
+    "generic_evidence": [
+      "'non-carcinogenic molecules' refers to molecule.label = '-'",
+      "'molecules consisted more than {100} atoms' refers to COUNT(molecule.molecule_id) > 100"
+    ]
+  },
+  "65": {
+    "question": "List all the elements with triple bond, consisted in molecule TR024.",
+    "GT_SQL": "SELECT T1.element FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.molecule_id = 'TR024' AND T2.bond_type = '#'",
+    "actual_evidence": [
+      "triple bond refers to bond_type = '#'",
+      " element = \u2018cl\u2019 means Chlorine",
+      " element = \u2018c\u2019 means Carbon",
+      " element = \u2018h\u2019 means Hydrogen",
+      " element = \u2018o\u2019 means Oxygen, element = \u2019s\u2019 means Sulfur",
+      " element = \u2019n\u2019 means Nitrogen, element = \u2018p\u2019 means Phosphorus, element = \u2018na\u2019 means Sodium, element = \u2018br\u2019 means Bromine, element = \u2018f\u2019 means Fluorine",
+      " element = \u2018i\u2019 means Iodine",
+      " element = \u2018sn\u2019 means Tin",
+      " element = \u2018pb\u2019 means Lead",
+      " element = \u2018te\u2019 means Tellurium",
+      " element = \u2018ca\u2019 means Calcium"
+    ],
+    "intermediate_evidence": [
+      "'triple bond' refers to bond_type = '#'",
+      "'Chlorine' refers to element = 'cl'",
+      "'Carbon' refers to element = 'c'",
+      "'Hydrogen' refers to element = 'h'",
+      "'Oxygen' refers to element = 'o'",
+      "'Sulfur' refers to element = 's'",
+      "'Nitrogen' refers to element = 'n'",
+      "'Phosphorus' refers to element = 'p'",
+      "'Sodium' refers to element = 'na'",
+      "'Bromine' refers to element = 'br'",
+      "'Fluorine' refers to element = 'f'",
+      "'Iodine' refers to element = 'i'",
+      "'Tin' refers to element = 'sn'",
+      "'Lead' refers to element = 'pb'",
+      "'Tellurium' refers to element = 'te'",
+      "'Calcium' refers to element = 'ca'"
+
+    ],
+    "generic_evidence": [
+      "'elements with triple bond' refers to bond.bond_type = '#'",
+      "'Chlorine' refers to atom.element = 'cl'",
+      "'Carbon' refers to atom.element = 'c'",
+      "'Hydrogen' refers to atom.element = 'h'",
+      "'Oxygen' refers to atom.element = 'o'",
+      "'Sulfur' refers to atom.element = 's'",
+      "'Nitrogen' refers to atom.element = 'n'",
+      "'Phosphorus' refers to atom.element = 'p'",
+      "'Sodium' refers to atom.element = 'na'",
+      "'Bromine' refers to atom.element = 'br'",
+      "'Fluorine' refers to atom.element = 'f'",
+      "'Iodine' refers to atom.element = 'i'",
+      "'Tin' refers to atom.element = 'sn'",
+      "'Lead' refers to atom.element = 'pb'",
+      "'Tellurium' refers to atom.element = 'te'",
+      "'Calcium' refers to atom.element = 'ca'"
+    ]
+  },
+  "66": {
+    "question": "Calculate the percentage of carcinogenic molecules with triple bonded Hidrogen atoms.",
+    "GT_SQL": "SELECT CAST(SUM(CASE WHEN T1.label = '+' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN atom AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T1.molecule_id = T3.molecule_id WHERE T3.bond_type = '#' AND T2.element = 'h'",
+    "actual_evidence": [
+      "hydrogen refers to element = 'h'",
+      " label = '+' mean molecules are carcinogenic",
+      " triple bond refers to bond_type = '#'",
+      " percentage = DIVIDE(SUM(label = '+'), COUNT(molecule_id)) * 100.0 where element = 'h' AND bond_type = '#'"
+    ],
+    "intermediate_evidence": [
+      "'hydrogen atoms' refers to element = 'h'",
+      "'carcinogenic molecules' refers to label = '+'",
+      "'triple bonded atoms' refers to bond_type = '#'",
+      "'percentage of carcinogenic molecules with triple bonded Hydrogen atoms' refers to calculation = DIVIDE(SUM(label = '+'), COUNT(DISTINCT molecule_id)) * 100.0 where element = 'h' AND bond_type = '#'"
+    ],
+    "generic_evidence": [
+      "'hydrogen atoms' refers to atom.element = 'h'",
+      "'carcinogenic molecules' refers to molecule.label = '+'",
+      "'triple bonded atoms' refers to bond.bond_type = '#'",
+      "'percentage of carcinogenic molecules' refers to CAST(SUM(CASE WHEN molecule.label = '+' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(DISTINCT molecule.molecule_id)"
+    ]
+  },
+  "67": {
+    "question": "How many of the molecules are carcinogenic?",
+    "GT_SQL": "SELECT COUNT(T.molecule_id) FROM molecule AS T WHERE T.label = '+'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'molecules are carcinogenic' refers to label = '+'"
+    ],
+    "generic_evidence": [
+      "'molecules are carcinogenic' refers to molecule.label = '+'"
+    ]
+  },
+  "68": {
+    "question": "In the molecule TR008, how many carbons are present?",
+    "GT_SQL": "SELECT COUNT(T.atom_id) FROM atom AS T WHERE T.molecule_id = 'TR008' AND T.element = 'c'",
+    "actual_evidence": [
+      "carbon refers to element = 'c'"
+    ],
+    "intermediate_evidence": [
+      "'carbon' refers to element = 'c'"
+    ],
+    "generic_evidence": [
+      "'carbon' refers to atom.element = 'c'"
+    ]
+  },
+  "69": {
+    "question": "in molecules with triple bonds, how many of them are not carcinogenic?",
+    "GT_SQL": "SELECT COUNT(DISTINCT T1.molecule_id) FROM molecule AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.bond_type = '#' AND T1.label = '-'",
+    "actual_evidence": [
+      "triple bond refers to bond_type = '#'",
+      " label = '-' means molecules are non-carcinogenic"
+    ],
+    "intermediate_evidence": [
+      "'triple bond' refers to bond_type = '#'",
+      "'not carcinogenic' refers to label = '-'"
+    ],
+    "generic_evidence": [
+      "'molecules with triple bonds' refers to bond.bond_type = '#'",
+      "'not carcinogenic' refers to molecule.label = '-'"
+    ]
+  },
+  "70": {
+    "question": "What is the atom ID of double bonded carbon in TR012 molecule?",
+    "GT_SQL": "SELECT T1.atom_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T2.molecule_id = 'TR012' AND T3.bond_type = '=' AND T1.element = 'c'",
+    "actual_evidence": [
+      "carbon refers to element = 'c'",
+      " double bond refers to bond_type = ' = '"
+    ],
+    "intermediate_evidence": [
+      "'carbon' refers to element = 'c'",
+      "'double bonded' refers to bond_type = '='"
+    ],
+    "generic_evidence": [
+      "'carbon' refers to atom.element = 'c'",
+      "'double bonded' refers to bond.bond_type = '='"
+    ]
+  },
+  "71": {
+    "question": "List the atom ID of the carcinogenic molecule that contains oxygen?",
+    "GT_SQL": "SELECT T1.atom_id FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'o' AND T2.label = '+'",
+    "actual_evidence": [
+      "label = '+' mean molecules are carcinogenic",
+      " oxygen refers to element = 'o'"
+    ],
+    "intermediate_evidence": [
+      "'carcinogenic molecule' refers to label = '+'",
+      "'oxygen' refers to element = 'o'"
+    ],
+    "generic_evidence": [
+      "'carcinogenic molecule' refers to molecule.label = '+'",
+      "'oxygen' refers to atom.element = 'o'"
+    ]
+  }
+}
