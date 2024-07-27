@@ -12,9 +12,13 @@
 
     python sbst_iid.py; sbst_ood.py
 
-4. Coverage based retrieval for IN and OUT sets, respectively
+4. Coverage based retrieval for IN and OUT sets, respectively tun
 
     python sBSR_iid.py; python sBSR_ood.py
+   
+5. Retreiver with our substring-based method (SR) for IN and OUT sets, respectvely run
+
+   python 
 
 
 
