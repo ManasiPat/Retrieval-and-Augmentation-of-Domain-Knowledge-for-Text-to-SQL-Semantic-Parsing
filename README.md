@@ -13,7 +13,7 @@ Provide the appropriate paths and the OpenAI api key to run the code.
 
 The files required for running the code are provided. Files Provided:
 
-1. Split Files for IID and OOD splits respectievly
+1. Split Files for IN and OUT splits respectievly
    
 2. Templatized Domain Statements Files
    
