@@ -1,4 +1,4 @@
-To run the codes with templatized domain statements
+##To run the codes with templatized domain statements
 
 1. BM 25 iid and ood results
 python bm25.py
