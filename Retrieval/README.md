@@ -16,7 +16,7 @@
 
     python sBSR_iid.py; python sBSR_ood.py
    
-5. Retreiver with our substring-based method (SR) for IN and OUT sets, respectvely run
+5. Retreiver with our proposed substring-based approach (SR) for IN and OUT sets, respectvely run
 
    python SR_retrieval_IID.py; python SR_retrieval_OOD.py
 
@@ -36,10 +36,10 @@
 
    python NT/sbst_iid_NT.py; NT/sbst_ood_NT.py
 
-5. Coverage based retrieval for IN and OUT sets, respectively run
+4. Coverage based retrieval for IN and OUT sets, respectively run
 
    python NT/sBSR_iid_NT.py; python NT/sBSR_ood_NT.py
 
-6. Our proposed approach based retrieval for IN and OUT sets, respectively run
+5. Retreiver with  Our proposed approach based retrieval for IN and OUT sets, respectively run
 
     python NT/new_SR_loop_NT.py; python NT/new_SR_ood_loop_NT.py
