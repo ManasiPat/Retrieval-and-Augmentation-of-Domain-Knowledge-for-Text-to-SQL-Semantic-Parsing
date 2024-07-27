@@ -1,5 +1,4 @@
 # Retrieval-and-Augmentation-of-Domain-Knowledge-for-Text-to-SQL-Semantic-Parsing
-Code for Retrieval and Augmentation of Domain Knowledge for Text-to-SQL Semantic Parsing
 
 To get the retrieved evidences for IN and OUT split respectively, refer to ReadMe.md file in Retrieval folder. 
 
