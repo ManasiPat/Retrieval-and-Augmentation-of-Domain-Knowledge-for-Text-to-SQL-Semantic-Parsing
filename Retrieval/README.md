@@ -20,7 +20,7 @@
 
 # To run the codes with non-templatized domain statements
 
-1. BM 25 iid and ood results run
+1. BM25 IN and OUT results run
 
   python NT/bm25_NT.py
 
