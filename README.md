@@ -9,7 +9,7 @@ Run hugging_face_SQL_Gen.py file to get the results using Mixtral, SQL Coder and
 Run gemini_SQL_gen.py file to get the results using Gemini 1.5 Flash.
 
 For getting the results using a particular method, select the method from the list of methods commented after the method variable is defined in the file.
-Provide the appropriate paths and the OpenAI api key to run the code.
+Provide the appropriate paths and the API keys to run the code.
 
 The files required for running the code are provided. Files Provided:
 
