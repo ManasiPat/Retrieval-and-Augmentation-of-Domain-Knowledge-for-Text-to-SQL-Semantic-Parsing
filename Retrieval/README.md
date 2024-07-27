@@ -18,7 +18,7 @@
    
 5. Retreiver with our substring-based method (SR) for IN and OUT sets, respectvely run
 
-   python 
+   python SR_retrieval_IID.py; python SR_retrieval_OOD.py
 
 
 
